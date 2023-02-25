@@ -10,8 +10,8 @@ const hpp = require('hpp');
 const AppError = require('./backend/utils/appError');
 const globalErrorHandler = require('./backend/controller/errorController');
 
-// eslint-disable-next-line import/no-dynamic-require
 const userRoute = require(`${__dirname}/backend/routes/userRoute`);
+const tourRoute = require(`${__dirname}/backend/routes/tourRoute`);
 
 // Express app and body parser with limit, reading data from body into req.body
 const app = express();
@@ -68,6 +68,7 @@ app.use((req, res, next) => {
 
 // ROUTE HANDLER ----------------------------------
 app.use('/api/v1/users', userRoute);
+app.use('/api/v1/tours', tourRoute);
 
 // Route error
 app.all('*', (req, res, next) => {
