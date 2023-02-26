@@ -1,5 +1,9 @@
 require('dotenv').config();
+
+// Connect to Database
 const connectDB = require('./backend/config/db');
+const HOST = process.env.DATABASE_LOCAL;
+connectDB(HOST);
 
 // Handle uncaught exceptions
 process.on('uncaughtException', (err) => {
@@ -12,12 +16,9 @@ process.on('uncaughtException', (err) => {
 // Import express application
 const app = require('./app');
 
-// Connect to Database
-const HOST = process.env.DATABASE_LOCAL;
+// Port
 const port = process.env.PORT || 5000;
-
 const server = app.listen(port, () => {
-  connectDB(HOST);
   console.log(`[INFO] Running on port ${port}...`);
 });
 

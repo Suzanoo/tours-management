@@ -9,3 +9,28 @@ exports.getAllTours = CRUD.getAll(Tour);
 exports.updateTour = CRUD.updateOne(Tour);
 
 exports.deleteTour = CRUD.deleteOne(Tour);
+
+/*
+{
+    "startLocation": {
+      "description": "NYC, USA",
+      "type": "Point",
+      "coordinates": [100.8825, 12.9236],
+      "address": "Manhattan, NY 10036, USA"
+    },
+    "name": "Pattaya Night Live",
+    "duration": 7,
+    "maxGroupSize": 12,
+    "difficulty": "easy",
+    "price": 1497,
+    "summary": "Enjoy the Happiest Live in one of the best places in the world",
+    "description": "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum!\nDolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur, exercitation ullamco laboris nisi ut aliquip. Lorem ipsum dolor sit amet, consectetur adipisicing elit!",
+    "imageCover": "tour-9-cover.jpg",
+    "startDates": [
+        "2021-12-16T10:00:00.000Z",
+        "2022-01-16T10:00:00.000Z",
+        "2022-12-12T10:00:00.000Z"
+    ],
+    "secretTour": false
+  }
+*/

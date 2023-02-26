@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout, reset } from '../features/auth/authSlice';
 
-import BurgerMenu from './BurgerMenu';
+// import BurgerMenu from './BurgerMenu';
 
 function Header() {
   const navigate = useNavigate();
@@ -31,9 +31,7 @@ function Header() {
                 <FaSignOutAlt /> Logout
               </button>
             </li>
-            <li>
-              <BurgerMenu />
-            </li>
+            <li>{/* <BurgerMenu /> */}</li>
           </>
         ) : (
           <>

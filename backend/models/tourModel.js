@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
 
-const Users = require('./userModel');
-
 const tourSchema = new mongoose.Schema(
   {
     name: {
@@ -26,7 +24,7 @@ const tourSchema = new mongoose.Schema(
       required: [true, 'Please define a difficulty of tour'],
       enum: {
         values: ['easy', 'medium', 'difficulty'],
-        message: 'Difficulty is either: easy, medium, difficult',
+        message: 'Difficulty is either: easy, medium, difficulty',
       },
     },
     ratingsAverage: {
@@ -103,10 +101,11 @@ const tourSchema = new mongoose.Schema(
         day: Number,
       },
     ],
+    // Reference user schema
     guides: [
       {
         type: mongoose.Schema.ObjectId,
-        ref: 'Users',
+        ref: 'users',
       },
     ],
   },
@@ -133,6 +132,15 @@ tourSchema.pre('save', function (next) {
   next();
 });
 
+/*
+If use embed guide(guide: Array): iterrate guide by ID
+tourSchema.pre('save', async function(next) {
+  const guidesPromises = this.guides.map(async id => await User.findById(id));
+  this.guides = await Promise.all(guidesPromises);
+  next();
+});
+*/
+
 // QUERY MIDDLEWARE
 tourSchema.pre(/^find/, function (next) {
   this.find({ secretTour: { $ne: true } });
@@ -155,6 +163,7 @@ tourSchema.post(/^find/, function (docs, next) {
 
 // AGGREGATION MIDDLEWARE
 
+// REGISTER
 const Tour = mongoose.model('tours', tourSchema);
 
 module.exports = Tour;
