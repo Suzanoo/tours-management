@@ -1,4 +1,4 @@
-/* eslint-disable */
+/*
 import { FaBars } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -40,18 +40,34 @@ function BurgerMenu() {
           <a href="#">Bill</a>
           <hr />
           <a href="#">Setting</a>
-          {/* <Link to="">
-            <FaHorseHead /> Profile
-          </Link>
-          <Link to="">
-            <FaHorseHead /> Change Password
-          </Link>
-          <Link to="">
-            <FaHorseHead /> Bill
-          </Link> */}
+
         </div>
       )}
     </div>
+  );
+} */
+
+import { slide as Menu } from 'react-burger-menu';
+
+function BurgerMenu() {
+  const showSettings = (event) => {
+    event.preventDefault();
+  };
+  return (
+    <Menu>
+      <a id="home" className="menu-item" href="/">
+        Home
+      </a>
+      <a id="about" className="menu-item" href="/about">
+        About
+      </a>
+      <a id="contact" className="menu-item" href="/contact">
+        Contact
+      </a>
+      <a onClick={showSettings} className="menu-item--small" href="">
+        Settings
+      </a>
+    </Menu>
   );
 }
 
