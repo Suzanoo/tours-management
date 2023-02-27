@@ -80,3 +80,11 @@ app.all('*', (req, res, next) => {
 app.use(globalErrorHandler);
 
 module.exports = app;
+
+/*
+
+INFLUENCES:
+https://github.com/saptaparneechaudhuri/user-auth-youtube
+https://codepen.io/z-/pen/OBPJKK
+
+*/

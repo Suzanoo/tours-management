@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
-// import { getAllProducts } from '../features/product/productSlice';
+
 import Spinner from '../components/Spinner';
+import Slide from '../components/Slide';
 
 function Home() {
   const dispatch = useDispatch();
@@ -21,18 +22,11 @@ function Home() {
   if (isLoading) return <Spinner />;
 
   return (
-    <section>
-      <h2>
-        <p>I tried and failed.</p>
-        <p>I tried again and again.</p>
-        <br></br>
-        <hr></hr>
-
-        {products.data.data.map((el) => {
-          return <li key={el.name}>{el.name}</li>;
-        })}
-      </h2>
-    </section>
+    <>
+      <section>
+        <Slide />
+      </section>
+    </>
   );
 }
 

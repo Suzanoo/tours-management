@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import ForgotPwd from './pages/ForgotPwd';
 import ResetPwd from './pages/ResetPwd';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/:token" element={<ResetPwd />} />
             {/* TODO : Solve to use  path="/reset-pwd:token" instead */}
           </Routes>
+          <Footer />
         </div>
       </Router>
       <ToastContainer />

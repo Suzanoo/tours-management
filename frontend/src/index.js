@@ -4,6 +4,9 @@ import { Provider } from 'react-redux';
 import { store } from './app/store';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+
+// CSS
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './public/css/index.css';
 
 const container = document.getElementById('root');
