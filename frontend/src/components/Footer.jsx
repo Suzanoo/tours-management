@@ -6,7 +6,6 @@ import '../public/css/index.css';
 function Footer() {
   return (
     <>
-      <hr></hr>
       <footer className="footer">
         <span className="">I tried and failed. I tried again and again.</span>
         <span>

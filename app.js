@@ -68,6 +68,7 @@ app.use((req, res, next) => {
 });
 
 // ROUTE HANDLER ----------------------------------
+app.use('/api/v1/admin', adminRoute);
 app.use('/api/v1/users', userRoute);
 app.use('/api/v1/tours', tourRoute);
 app.use('/api/v1/booking', bookingRoute);

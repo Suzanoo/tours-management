@@ -1,4 +1,7 @@
-import { FaSignInAlt, FaSignOutAlt, FaUser, FaHorseHead } from 'react-icons/fa';
+import { FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa';
+import { GiGemini } from 'react-icons/gi';
+import { IoCreateOutline } from 'react-icons/io5';
+
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout, reset } from '../features/auth/authSlice';
@@ -20,18 +23,55 @@ function Header() {
     <header className="header">
       <div className="logo">
         <Link to="/">
-          <FaHorseHead /> Home
+          <GiGemini />
         </Link>
       </div>
       <ul>
         {user ? (
+          user.data.user.role === 'admin' ? (
+            <>
+              <li>
+                <button className="btn">
+                  <IoCreateOutline /> New
+                </button>
+
+                <button className="btn" onClick={onLogout}>
+                  <FaSignOutAlt /> Logout
+                </button>
+              </li>
+            </>
+          ) : (
+            <button className="btn" onClick={onLogout}>
+              <FaSignOutAlt /> Logout
+            </button>
+          )
+        ) : (
+          <>
+            <ul>
+              <li>
+                <Link to="/login" className="btn">
+                  <FaSignInAlt />
+                  Login
+                </Link>
+              </li>
+              <li>
+                <Link to="/register" className="btn">
+                  <FaUser />
+                  Register
+                </Link>
+              </li>
+            </ul>
+          </>
+        )}
+
+        {/* {user ? (
           <>
             <li>
               <button className="btn" onClick={onLogout}>
                 <FaSignOutAlt /> Logout
               </button>
             </li>
-            <li>{/* <BurgerMenu /> */}</li>
+            
           </>
         ) : (
           <>
@@ -50,7 +90,7 @@ function Header() {
               </li>
             </ul>
           </>
-        )}
+        )} */}
       </ul>
     </header>
   );

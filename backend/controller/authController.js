@@ -44,7 +44,7 @@ const createSendToken = (user, statusCode, res) => {
 };
 
 // ----------------------
-// SIGNUP
+// USER SIGNUP
 exports.signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create({
     name: req.body.name,
@@ -52,7 +52,21 @@ exports.signup = catchAsync(async (req, res, next) => {
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
     passwordChangedAt: req.body.passwordChangedAt,
-    role: req.body.role,
+    role: 'user',
+  });
+
+  createSendToken(newUser, 201, res);
+});
+
+// ADMIN SIGNUP
+exports.adminSignup = catchAsync(async (req, res, next) => {
+  const newUser = await User.create({
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
+    passwordConfirm: req.body.passwordConfirm,
+    passwordChangedAt: req.body.passwordChangedAt,
+    role: 'admin',
   });
 
   createSendToken(newUser, 201, res);
@@ -77,6 +91,26 @@ exports.login = catchAsync(async (req, res, next) => {
   // 3) If everything ok, send token to client
   createSendToken(user, 200, res);
 });
+
+// ADMIN LOGIN
+exports.adminLogin = catchAsync(async (req, res, next) => {
+  const { email, password } = req.body; // note: use ES6 Oject destructuring format
+
+  // 1) Check if email and password exist
+  if (!email || !password) {
+    return next(new AppError('Please provide email and password!', 400));
+  }
+  // 2) Check if user exists && password is correct
+  const user = await User.findOne({ email }).select('+password');
+
+  if (!user || !(await user.correctPassword(password, user.password))) {
+    return next(new AppError('Incorrect email or password', 401));
+  }
+
+  // 3) If everything ok, send token to client
+  createSendToken(user, 200, res);
+});
+
 // ----------------------
 // LOGOUT
 exports.logout = (req, res) => {
