@@ -10,9 +10,18 @@ const getAllProducts = async () => {
   return response.data;
 };
 
+// Create new product
+const createNewProduct = async (productData) => {
+  const response = await axios.post(API_URL + '/', productData);
+  if (response.data) console.log(response.data);
+  // localStorage.setItem('products', JSON.stringify(response.data));
+  // return response.data;
+};
+
 // Create services
 const productService = {
   getAllProducts,
+  createNewProduct,
 };
 
 export default productService;

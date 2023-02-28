@@ -12,7 +12,7 @@ const globalErrorHandler = require('./backend/controller/errorController');
 
 const adminRoute = require(`${__dirname}/backend/routes/adminRoute`);
 const userRoute = require(`${__dirname}/backend/routes/userRoute`);
-const tourRoute = require(`${__dirname}/backend/routes/tourRoute`);
+const productRoute = require(`${__dirname}/backend/routes/productRoute`);
 const bookingRoute = require(`${__dirname}/backend/routes/bookingRoute`);
 
 // Express app and body parser with limit, reading data from body into req.body
@@ -71,7 +71,7 @@ app.use((req, res, next) => {
 // ROUTE HANDLER ----------------------------------
 app.use('/api/v1/admin', adminRoute);
 app.use('/api/v1/users', userRoute);
-app.use('/api/v1/tours', tourRoute);
+app.use('/api/v1/products', productRoute);
 app.use('/api/v1/booking', bookingRoute);
 
 // Route error

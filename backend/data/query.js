@@ -3,7 +3,7 @@ const dotenv = require('dotenv').config();
 
 const connectDB = require('../config/db');
 
-const MODEL = require('../models/tourModel');
+const MODEL = require('../models/productModel');
 
 const HOST = process.env.DATABASE_LOCAL.replace(
   '<PASSWORD>',
@@ -45,6 +45,6 @@ if (process.argv[2] === '--import') {
 
 /*
 How to use??
-% node /Users/suzanoo/Dev/DJ/node/natours/backend/data/query.js --delete
-% node /Users/suzanoo/Dev/DJ/node/natours/backend/data/query.js --import
+% node /Users/suzanoo/Dev/DJ/node/gemini/backend/data/query.js --delete
+% node /Users/suzanoo/Dev/DJ/node/gemini/backend/data/query.js --import
 */

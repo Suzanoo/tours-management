@@ -1,14 +1,14 @@
 const CRUD = require('./factoryFunction');
-const Tour = require('../models/tourModel');
+const Product = require('../models/productModel');
 
-exports.createTour = CRUD.createOne(Tour);
+exports.createProduct = CRUD.createOne(Product);
 
-exports.getTour = CRUD.getOne(Tour);
-exports.getAllTours = CRUD.getAll(Tour);
+exports.getProduct = CRUD.getOne(Product);
+exports.getAllProducts = CRUD.getAll(Product);
 
-exports.updateTour = CRUD.updateOne(Tour);
+exports.updateProduct = CRUD.updateOne(Product);
 
-exports.deleteTour = CRUD.deleteOne(Tour);
+exports.deleteProduct = CRUD.deleteOne(Product);
 
 /*
 {
