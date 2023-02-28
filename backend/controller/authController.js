@@ -107,6 +107,12 @@ exports.adminLogin = catchAsync(async (req, res, next) => {
     return next(new AppError('Incorrect email or password', 401));
   }
 
+  if (user.role != 'admin') {
+    return next(
+      new AppError('You are not admin. Not allowed to enter admin page', 403)
+    );
+  }
+
   // 3) If everything ok, send token to client
   createSendToken(user, 200, res);
 });

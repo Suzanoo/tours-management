@@ -4,6 +4,7 @@ const authCtrl = require('../controller/authController');
 
 const router = express.Router();
 
+router.post('/login', authCtrl.adminLogin); // Login to admin page
 router.get('/logout', authCtrl.logout);
 router.post('/forgot-pwd', authCtrl.forgotPassword);
 router.patch('/reset-pwd/:token', authCtrl.resetPassword);
@@ -19,8 +20,7 @@ router.delete('/deleteCurrentUser', userCtrl.deleteCurrentUser);
 // Admin controller
 router.use(authCtrl.restrictTo('admin'));
 
-router.post('/signup', authCtrl.adminSignup); // Only existing admin registe new admin
-router.post('/login', authCtrl.adminLogin); // Login to admin page
+router.post('/signup', authCtrl.adminSignup); // Only existing admin allow to registed new admin
 router.route('/').get(userCtrl.getAllUsers).post(userCtrl.createUser);
 
 router

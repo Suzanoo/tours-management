@@ -10,6 +10,7 @@ const hpp = require('hpp');
 const AppError = require('./backend/utils/appError');
 const globalErrorHandler = require('./backend/controller/errorController');
 
+const adminRoute = require(`${__dirname}/backend/routes/adminRoute`);
 const userRoute = require(`${__dirname}/backend/routes/userRoute`);
 const tourRoute = require(`${__dirname}/backend/routes/tourRoute`);
 const bookingRoute = require(`${__dirname}/backend/routes/bookingRoute`);
