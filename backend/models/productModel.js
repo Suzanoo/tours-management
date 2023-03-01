@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
 
+const geocoder = require('../utils/geocode');
+
 const productSchema = new mongoose.Schema(
   {
     name: {
@@ -92,7 +94,6 @@ const productSchema = new mongoose.Schema(
       },
       formattedAddress: String,
       address: String,
-      description: String,
     },
     locations: [
       {
@@ -106,8 +107,6 @@ const productSchema = new mongoose.Schema(
         },
         formattedAddress: String,
         address: String,
-        description: String,
-        day: Number,
       },
     ],
     // Reference user schema
@@ -142,7 +141,7 @@ productSchema.pre('save', function (next) {
 });
 
 // Use formattedAddress comes from Mapquest API instead of addresses
-productSchema.pre('save', async function (next) {
+productSchema.pre('save', function (next) {
   this.locations.address = undefined;
   this.startLocation.address = undefined;
   next();

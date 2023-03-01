@@ -22,9 +22,6 @@ function CreateNewProduct() {
   // 1).Initial state
   const initialState = {
     startLocation: {
-      description: '',
-      type: '',
-      coordinates: [],
       address: '',
     },
     name: '',
@@ -125,35 +122,6 @@ function CreateNewProduct() {
       </section>
       <section className="form">
         <form onSubmit={onSubmit}>
-          <div className="form-group">
-            <label htmlFor="startLocation.description">
-              Start Location Description
-            </label>
-            <input
-              type="text"
-              name="description"
-              value={startLocation.description}
-              onChange={handleStartLocationChange}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="startLocation.type">Start Location Type</label>
-            <input
-              type="text"
-              name="type"
-              value={startLocation.type}
-              onChange={handleStartLocationChange}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="coordinates">Start Location Coordinates</label>
-            <input
-              type="text"
-              name="coordinates"
-              value={startLocation.coordinates}
-              onChange={handleStartLocationChange}
-            />
-          </div>
           <div className="form-group">
             <label htmlFor="startLocation.address">
               Start Location Address

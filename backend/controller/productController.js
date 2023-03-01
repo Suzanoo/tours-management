@@ -1,7 +1,53 @@
 const CRUD = require('./factoryFunction');
 const Product = require('../models/productModel');
+const AppError = require('../utils/appError');
+const catchAsync = require('../utils/catchAsync');
 
-exports.createProduct = CRUD.createOne(Product);
+const geocoder = require('../utils/geocode');
+
+// get location geodata from mapquest API
+const geoLocation = async (address) => {
+  try {
+    const mapquest_response = await geocoder.geocode(address);
+    return mapquest_response;
+  } catch (error) {
+    return new AppError('Server error', 500);
+  }
+};
+
+exports.createProduct = catchAsync(async (req, res, next) => {
+  const productData = req.body;
+
+  const startLocationGeo = await geoLocation(productData.startLocation.address);
+  console.log(startLocationGeo);
+
+  productData.startLocation = {
+    type: 'Point',
+    coordinates: [startLocationGeo[0].longitude, startLocationGeo[0].latitude],
+    formattedAddress: startLocationGeo[0].formattedAddress,
+    address: productData.address, // undefined in model pre-hook later
+  };
+
+  if ('location' in productData === true) {
+    const locationGeo = await geoLocation(productData.location.address);
+    productData.location = {
+      type: 'Point',
+      coordinates: [locationGeo[0].longitude, locationGeo[0].latitude],
+      formattedAddress: locationGeo[0].formattedAddress,
+      address: productData.address, // undefined in model pre-hook later
+    };
+  }
+
+  const doc = await Product.create(productData);
+  res.status(201).json({
+    status: 'success',
+    data: {
+      data: doc,
+    },
+  });
+});
+
+// exports.createProduct = CRUD.createOne(Product);
 
 exports.getProduct = CRUD.getOne(Product);
 exports.getAllProducts = CRUD.getAll(Product);
