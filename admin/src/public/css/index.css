@@ -128,7 +128,7 @@ h3 {
   align-items: center;
   justify-content: center;
 }
-
+/* 
 .btn svg {
   margin-right: 8px;
 }
@@ -145,12 +145,12 @@ h3 {
 
 .btn:hover {
   transform: scale(0.98);
-}
+} */
 
 footer {
   display: flex;
-  position: fixed;
-  top: 95%;
+  /* position: relative; */
+  /* top: 95%; */
   bottom: 0;
   left: 0;
   right: 0;

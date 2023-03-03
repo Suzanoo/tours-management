@@ -131,17 +131,27 @@ exports.logout = (req, res) => {
 // ----------------------
 // PROTECT ROUTE
 exports.protect = catchAsync(async (req, res, next) => {
+  // See Axios request headers.cookie
+  // console.log(req.headers.cookie);
+  // console.log(req.headers.cookie.includes('jwt'));
+
+  if (!req.headers.cookie.includes('jwt')) {
+    return next(
+      new AppError('You are not logged in! Please log in to get access.', 401)
+    );
+  }
+
   // 1) Getting token and check of it's there
   let token;
-  // Get from headers or
+  // Get from headers
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
-    // Get from cookie
-  } else if (req.cookie.jwt) {
-    token = req.cookie.jwt;
+    // Or get from AXIOS headers
+  } else if (req.headers.cookie.split('; ')[1].split('=')[1]) {
+    token = req.headers.cookie.split('; ')[1].split('=')[1];
   }
 
   if (!token) {
@@ -171,7 +181,7 @@ exports.protect = catchAsync(async (req, res, next) => {
     );
   }
 
-  // grant access
+  // 5) grant access
   req.user = currentUser;
   next();
 });

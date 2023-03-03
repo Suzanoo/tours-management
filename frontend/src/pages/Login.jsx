@@ -1,12 +1,15 @@
 /* eslint-disable */
-
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaSignInAlt } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { login, reset } from '../features/auth/authSlice';
-import Spinner from '../components/Spinner';
+
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Spinner from 'react-bootstrap/Spinner';
+import FormGroup from 'react-bootstrap/esm/FormGroup';
 
 /*
 1).Define initial blank form
@@ -24,8 +27,8 @@ function Login() {
   };
 
   // 2).
-  const [formData, setFormData] = useState(initialState);
-  const { email, password } = formData;
+  const [formValue, setformValue] = useState(initialState);
+  const { email, password } = formValue;
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -47,10 +50,10 @@ function Login() {
     dispatch(reset());
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
-  const onChange = (el) => {
-    setFormData((prevState) => ({
+  const onChange = (e) => {
+    setformValue((prevState) => ({
       ...prevState,
-      [el.target.name]: el.target.value,
+      [e.target.name]: e.target.value,
     }));
   };
 
@@ -65,15 +68,12 @@ function Login() {
     dispatch(login(userData)); // update state
   };
 
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <Spinner animation="border" />;
 
   // 5).
   return (
     <>
-      <section className="heading">
-        <p>Login and Enjoy!</p>
-      </section>
-      <section className="form">
+      <section className="form-group">
         <form onSubmit={onSubmit}>
           <div className="form-group">
             <input
@@ -99,7 +99,7 @@ function Login() {
           </div>
 
           <div className="form-group">
-            <button type="submit" className="btn btn-block">
+            <button type="submit" className="btn-submit .btn:hover">
               Login
             </button>
           </div>

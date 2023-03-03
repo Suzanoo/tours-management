@@ -3,7 +3,7 @@ import axios from 'axios';
 const API_URL = 'api/v1/products';
 
 // Get All
-const getAllProducts = async () => {
+const getAll = async () => {
   const response = await axios.get(API_URL + '/');
   if (response.data)
     localStorage.setItem('products', JSON.stringify(response.data));
@@ -12,7 +12,7 @@ const getAllProducts = async () => {
 
 // Create services
 const productService = {
-  getAllProducts,
+  getAll,
 };
 
 export default productService;

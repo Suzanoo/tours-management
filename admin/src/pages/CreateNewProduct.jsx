@@ -7,7 +7,12 @@ import { toast } from 'react-toastify';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import { createNewProduct, reset } from '../features/product/productSlice';
+import {
+  createNewProduct,
+  getAllProducts,
+  reset,
+} from '../features/product/productSlice';
+
 import Spinner from '../components/Spinner';
 
 /*
@@ -17,7 +22,7 @@ import Spinner from '../components/Spinner';
 4).Events handlers
 5).JSX Rendering
 */
-
+const options = ['easy', 'medium', 'difficulty'];
 function CreateNewProduct() {
   // 1).Initial state
   const initialState = {
@@ -66,7 +71,7 @@ function CreateNewProduct() {
     }
 
     if (isSuccess) {
-      navigate('/'); // Redirect to Home page
+      // navigate('/');
     }
   }, [products, isError, isSuccess, message, navigate, dispatch]);
 
@@ -77,13 +82,13 @@ function CreateNewProduct() {
     }));
   };
 
-  const handleStartDateChange = (date, index) => {
+  const handleStartDate = (date, index) => {
     const newStartDates = [...formData.startDates];
     newStartDates[index] = date;
     setFormData({ ...formData, startDates: newStartDates });
   };
 
-  const handleStartLocationChange = (e) => {
+  const handleStartLocation = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
@@ -94,16 +99,16 @@ function CreateNewProduct() {
     }));
   };
 
-  const onSubmit = (el) => {
-    el.preventDefault();
+  const onSubmit = (e) => {
+    e.preventDefault();
 
     const productData = {
       startLocation,
       name,
-      duration: +duration,
-      maxGroupSize: +maxGroupSize,
+      duration: +duration, // convert to int
+      maxGroupSize: +maxGroupSize, // convert to int
       difficulty,
-      price: +price,
+      price: +price, // convert to int
       summary,
       description,
       imageCover,
@@ -130,7 +135,7 @@ function CreateNewProduct() {
               type="text"
               name="address"
               value={startLocation.address}
-              onChange={handleStartLocationChange}
+              onChange={handleStartLocation}
             />
           </div>
           <div className="form-group">
@@ -167,15 +172,18 @@ function CreateNewProduct() {
           </div>
           <div className="form-group">
             <label htmlFor="difficulty">Difficulty</label>
-            <input
-              className="form-control"
-              type="text"
+            <select
               name="difficulty"
               value={difficulty}
               onChange={handleChange}
-              placeholder="'easy', 'medium', 'difficulty'"
-              required
-            />
+            >
+              <option value="">--Choose...--</option>
+              {options.map((option, index) => (
+                <option key={index} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="form-group">
             <label htmlFor="price">Price</label>
@@ -224,7 +232,7 @@ function CreateNewProduct() {
               <DatePicker
                 key={index}
                 selected={el}
-                onChange={(date) => handleStartDateChange(date, index)}
+                onChange={(date) => handleStartDate(date, index)}
                 dateFormat="yyyy/MM/dd"
               />
             ))}

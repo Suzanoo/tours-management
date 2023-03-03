@@ -20,14 +20,14 @@ const initialState = {
   message: '',
 };
 
-// Create async action-reducer: register
+// Create async action-reducer
 export const getAllProducts = createAsyncThunk(
-  // async action type
+  // Action type
   'products/get_all_products',
-  // function return payload
-  async (user, thunkAPI) => {
+  // Payload
+  async (thunkAPI) => {
     try {
-      return await productService.getAllProducts();
+      return await productService.getAll();
     } catch (err) {
       const message =
         err.message ||
@@ -38,14 +38,14 @@ export const getAllProducts = createAsyncThunk(
   }
 );
 
-// Create slice
+// Slice
 export const productSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
     reset: (state) => {
       state.isLoading = false;
-      state.isSuccess = true; // ****
+      state.isSuccess = false; // ****
       state.isError = false;
       state.message = '';
     },
@@ -65,6 +65,7 @@ export const productSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
+        state.products = null;
       });
   },
 });

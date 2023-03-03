@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+
 import { Link } from 'react-router-dom';
 
 import { FaMountain, FaWalking, FaSnowflake, FaTree } from 'react-icons/fa';
@@ -9,11 +9,7 @@ import '../public/css/slide.scss';
 function Slide() {
   const [activeOption, setActiveOption] = useState(1);
 
-  const { products } = useSelector((state) => state.products);
-
-  const handleOptionClick = (option) => {
-    setActiveOption(option);
-  };
+  const products = JSON.parse(localStorage.getItem('products'));
 
   const title = [];
   const img = [];
@@ -25,41 +21,14 @@ function Slide() {
     duration.push(el.duration);
   });
 
+  const handleOptionClick = (option) => {
+    setActiveOption(option);
+  };
+
   return (
     <>
       <div className="slide-body">
         <div className="options">
-          {/* {products.data.data.slice(0, 4).map((el, index) => {
-            return (
-              <>
-                <div
-                  className={`option ${
-                    activeOption === { index } ? 'active' : ''
-                  }`}
-                  style={{
-                    '--optionBackground': `url(${require(`../public/img/coverImg/${el.imageCover}`)})`,
-                  }}
-                  onClick={() => handleOptionClick({ index })}
-                  key={el.name}
-                >
-                  <div className="shadow"></div>
-                  <div className="label">
-                    <Link to="">
-                      <div className="icon">
-                        <FaMountain />
-                      </div>
-                    </Link>
-
-                    <div className="info">
-                      <div className="main">{el.name}</div>
-                      <div className="sub">{el.duration} Days Trip</div>
-                    </div>
-                  </div>
-                </div>
-              </>
-            );
-          })} */}
-
           <div
             className={`option ${activeOption === 1 ? 'active' : ''}`}
             style={{
@@ -96,7 +65,7 @@ function Slide() {
               </div>
               <div className="info">
                 <div className="main">{title[1]}</div>
-                <div className="sub">Omuke trughte a otufta</div>
+                <div className="sub">{duration[1]} Days Trip</div>
               </div>
             </div>
           </div>
@@ -115,7 +84,7 @@ function Slide() {
               </div>
               <div className="info">
                 <div className="main">{title[2]}</div>
-                <div className="sub">Omuke trughte a otufta</div>
+                <div className="sub">{duration[2]} Days Trip</div>
               </div>
             </div>
           </div>
@@ -123,7 +92,7 @@ function Slide() {
           <div
             className={`option ${activeOption === 4 ? 'active' : ''}`}
             style={{
-              '--optionBackground': `url(${require(`../public/img/coverImg/${img[4]}`)})`,
+              '--optionBackground': `url(${require(`../public/img/coverImg/${img[3]}`)})`,
             }}
             onClick={() => handleOptionClick(4)}
           >
@@ -134,7 +103,7 @@ function Slide() {
               </div>
               <div className="info">
                 <div className="main">{title[3]}</div>
-                <div className="sub">Omuke trughte a otufta</div>
+                <div className="sub">{duration[3]} Days Trip</div>
               </div>
             </div>
           </div>

@@ -11,7 +11,7 @@ import ResetPwd from './pages/ResetPwd';
 
 import CreateNewProduct from './pages/CreateNewProduct';
 
-import Footer from './components/Footer';
+// import Footer from './components/Footer';
 
 function App() {
   return (
@@ -29,7 +29,7 @@ function App() {
 
             <Route path="/new-product" element={<CreateNewProduct />} />
           </Routes>
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </Router>
       <ToastContainer />

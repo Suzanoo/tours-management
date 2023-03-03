@@ -19,7 +19,7 @@ exports.createProduct = catchAsync(async (req, res, next) => {
   const productData = req.body;
 
   const startLocationGeo = await geoLocation(productData.startLocation.address);
-  console.log(startLocationGeo);
+  // console.log(startLocationGeo);
 
   productData.startLocation = {
     type: 'Point',

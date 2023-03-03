@@ -1,11 +1,10 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { toast } from 'react-toastify';
 
 import { register, reset } from '../features/auth/authSlice';
-import Spinner from '../components/Spinner';
+import Spinner from 'react-bootstrap/Spinner';
 
 /*
 1).Define initial blank form
@@ -73,7 +72,7 @@ function Register() {
     }
   };
 
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <Spinner animation="border" />;
 
   //5).JSX Rendering
   return (
@@ -129,7 +128,7 @@ function Register() {
           </div>
 
           <div className="form-group">
-            <button type="submit" className="btn btn-block">
+            <button type="submit" className="btn-submit .btn:hover">
               Submit
             </button>
           </div>

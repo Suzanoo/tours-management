@@ -1,30 +1,22 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
 
-import Spinner from '../components/Spinner';
+import { getAllProducts } from '../features/product/productSlice';
+
 import Slide from '../components/Slide';
+import Map from '../components/Map';
+import TourForm from '../components/TourForm';
 
 function Home() {
   const dispatch = useDispatch();
 
-  const { products, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.products
-  );
-
-  useEffect(() => {
-    if (isError) {
-      toast.error(message);
-    }
-    // dispatch(getAllProducts());
-  }, [isError, isSuccess, message, dispatch]);
-
-  if (isLoading) return <Spinner />;
+  dispatch(getAllProducts());
 
   return (
     <>
       <section>
         <Slide />
+        <Map />
+        <TourForm />
       </section>
     </>
   );

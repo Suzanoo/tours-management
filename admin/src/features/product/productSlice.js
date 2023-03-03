@@ -8,7 +8,7 @@ import productService from './productService';
 4.Create slice
 */
 
-// Fetch user from localStorage & cast to JSON object
+// Fetch products from localStorage & cast to JSON object
 const products = JSON.parse(localStorage.getItem('products'));
 
 // Initialize state

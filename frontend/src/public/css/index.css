@@ -90,6 +90,7 @@ h3 {
 .content {
   width: 70%;
   margin: 0 auto;
+  padding-top: 2rem;
 }
 
 .form-group {
@@ -115,9 +116,9 @@ h3 {
 
 .btn {
   padding: 10px 20px;
-  border: 1px solid #000;
+  border: 1px solid #828282;
   border-radius: 5px;
-  background: #000;
+  background: #828282;
   color: #fff;
   font-size: 16px;
   font-weight: 700;
@@ -140,27 +141,56 @@ h3 {
 
 .btn-block {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 1re;
 }
 
 .btn:hover {
   transform: scale(0.98);
 }
 
+.btn-submit {
+  padding: 10px 20px;
+  border: 1px solid #828282;
+  border-radius: 5px;
+  background: #828282;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  appearance: button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+}
+
+.btn-submit:hover {
+  transform: scale(0.98);
+}
+
 footer {
   display: flex;
-  position: fixed;
-  top: 95%;
   bottom: 0;
   left: 0;
   right: 0;
   height: 50px;
   width: 100%;
-  /* border-top: 1px solid rgb(67, 66, 66); */
+  border-top: 1px solid rgb(220, 220, 220);
   justify-content: center;
   align-items: center;
 }
 
 footer span {
   margin-right: 1rem;
+}
+
+#tour-plan {
+  margin-left: auto;
+  margin-right: auto;
+  display: table;
+}
+
+#tour-plan {
+  text-align: left;
 }
