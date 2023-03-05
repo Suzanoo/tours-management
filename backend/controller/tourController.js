@@ -1,5 +1,5 @@
 const CRUD = require('./factoryFunction');
-const Product = require('../models/productModel');
+const Tour = require('../models/tourModel');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 
@@ -15,30 +15,30 @@ const geoLocation = async (address) => {
   }
 };
 
-exports.createProduct = catchAsync(async (req, res, next) => {
-  const productData = req.body;
+exports.createTour = catchAsync(async (req, res, next) => {
+  const tourData = req.body;
 
-  const startLocationGeo = await geoLocation(productData.startLocation.address);
+  const startLocationGeo = await geoLocation(tourData.startLocation.address);
   // console.log(startLocationGeo);
 
-  productData.startLocation = {
+  tourData.startLocation = {
     type: 'Point',
     coordinates: [startLocationGeo[0].longitude, startLocationGeo[0].latitude],
     formattedAddress: startLocationGeo[0].formattedAddress,
-    address: productData.address, // undefined in model pre-hook later
+    address: tourData.address, // undefined in model pre-hook later
   };
 
-  if ('location' in productData === true) {
-    const locationGeo = await geoLocation(productData.location.address);
-    productData.location = {
+  if ('location' in tourData === true) {
+    const locationGeo = await geoLocation(tourData.location.address);
+    tourData.location = {
       type: 'Point',
       coordinates: [locationGeo[0].longitude, locationGeo[0].latitude],
       formattedAddress: locationGeo[0].formattedAddress,
-      address: productData.address, // undefined in model pre-hook later
+      address: tourData.address, // undefined in model pre-hook later
     };
   }
 
-  const doc = await Product.create(productData);
+  const doc = await Tour.create(tourData);
   res.status(201).json({
     status: 'success',
     data: {
@@ -47,14 +47,14 @@ exports.createProduct = catchAsync(async (req, res, next) => {
   });
 });
 
-// exports.createProduct = CRUD.createOne(Product);
+// exports.createtour = CRUD.createOne(tour);
 
-exports.getProduct = CRUD.getOne(Product);
-exports.getAllProducts = CRUD.getAll(Product);
+exports.getTour = CRUD.getOne(Tour);
+exports.getAllTours = CRUD.getAll(Tour);
 
-exports.updateProduct = CRUD.updateOne(Product);
+exports.updateTour = CRUD.updateOne(Tour);
 
-exports.deleteProduct = CRUD.deleteOne(Product);
+exports.deleteTour = CRUD.deleteOne(Tour);
 
 /*
 {

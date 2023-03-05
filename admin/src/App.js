@@ -9,7 +9,7 @@ import Register from './pages/Register';
 import ForgotPwd from './pages/ForgotPwd';
 import ResetPwd from './pages/ResetPwd';
 
-import CreateNewProduct from './pages/CreateNewProduct';
+import CreateNewTour from './pages/CreateNewTour';
 
 // import Footer from './components/Footer';
 
@@ -27,7 +27,7 @@ function App() {
             <Route path="/:token" element={<ResetPwd />} />
             {/* TODO : Solve to use  path="/reset-pwd:token" instead */}
 
-            <Route path="/new-product" element={<CreateNewProduct />} />
+            <Route path="/new-tour" element={<CreateNewTour />} />
           </Routes>
           {/* <Footer /> */}
         </div>

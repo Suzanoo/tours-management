@@ -3,7 +3,9 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Header from './components/Header';
-import Home from './pages/Home';
+import Nav from './components/Nav';
+import Landing from './pages/Landing';
+
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ForgotPwd from './pages/ForgotPwd';
@@ -15,9 +17,10 @@ function App() {
     <>
       <Router>
         <div className="container">
-          <Header />
+          <Nav />
+          {/* <Header /> */}
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Landing />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-pwd" element={<ForgotPwd />} />

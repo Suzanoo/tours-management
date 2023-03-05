@@ -1,19 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import productService from './productService';
+import tourService from './tourService';
 
 /*
-1.Fetch product from localStorage & cast to JSON object
+1.Fetch tour from localStorage & cast to JSON object
 2.Initialize state
 3.Create async action-reducer:
 4.Create slice
 */
 
-// Fetch products from localStorage & cast to JSON object
-const products = JSON.parse(localStorage.getItem('products'));
+// Fetch tours from localStorage & cast to JSON object
+const tours = JSON.parse(localStorage.getItem('tours'));
 
 // Initialize state
 const initialState = {
-  products: products ? products : null,
+  tours: tours ? tours : null,
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -21,13 +21,13 @@ const initialState = {
 };
 
 // Create async action:reducer
-export const getAllProducts = createAsyncThunk(
+export const getAllTours = createAsyncThunk(
   // Action type
-  'products/get_all_products',
+  'tours/get_all_tours',
   // Payload:
   async (thunkAPI) => {
     try {
-      return await productService.getAllProducts();
+      return await tourService.getAllTours();
     } catch (err) {
       const message =
         err.message ||
@@ -38,14 +38,14 @@ export const getAllProducts = createAsyncThunk(
   }
 );
 
-export const createNewProduct = createAsyncThunk(
+export const createNewTour = createAsyncThunk(
   // Action type
-  'products/create-new-product',
+  'tours/create-new-tour',
   // Payload:
-  async (productData, thunkAPI) => {
-    console.log(productData);
+  async (tourData, thunkAPI) => {
+    console.log(tourData);
     try {
-      return await productService.createNewProduct(productData);
+      return await tourService.createNewTour(tourData);
     } catch (err) {
       const message =
         err.message ||
@@ -57,8 +57,8 @@ export const createNewProduct = createAsyncThunk(
 );
 
 // Create slice
-export const productSlice = createSlice({
-  name: 'products',
+export const tourSlice = createSlice({
+  name: 'tours',
   initialState,
   reducers: {
     reset: (state) => {
@@ -71,28 +71,28 @@ export const productSlice = createSlice({
   // Manage payload life cycle
   extraReducers: (builder) => {
     builder
-      .addCase(getAllProducts.pending, (state) => {
+      .addCase(getAllTours.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getAllProducts.fulfilled, (state, action) => {
+      .addCase(getAllTours.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.user = action.payload;
       })
-      .addCase(getAllProducts.rejected, (state, action) => {
+      .addCase(getAllTours.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
       })
-      .addCase(createNewProduct.pending, (state) => {
+      .addCase(createNewTour.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(createNewProduct.fulfilled, (state, action) => {
+      .addCase(createNewTour.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.user = action.payload;
       })
-      .addCase(createNewProduct.rejected, (state, action) => {
+      .addCase(createNewTour.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
@@ -101,7 +101,7 @@ export const productSlice = createSlice({
 });
 
 // Action
-export const { reset } = productSlice.actions;
+export const { reset } = tourSlice.actions;
 
 // Reducer
-export default productSlice.reducer;
+export default tourSlice.reducer;

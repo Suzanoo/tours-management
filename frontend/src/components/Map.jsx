@@ -9,8 +9,8 @@ mapboxgl.accessToken =
   'pk.eyJ1Ijoic3V6YW5vbyIsImEiOiJjbGVmc2t4eTYwMDBtNDZxbDkyNmlqdDhkIn0.T78HnlAr5OHoHOh1-JN99g';
 
 // Fetch locations from MongoDB and parse as markers of map
-const loadMarker = async (map, products) => {
-  await products.data.data.forEach((el) => {
+const loadMarker = async (map, tours) => {
+  await tours.data.data.forEach((el) => {
     new mapboxgl.Marker().setLngLat(el.startLocation.coordinates).addTo(map);
   });
 };
@@ -22,7 +22,7 @@ const Map = () => {
   const [lat, setLat] = useState(13.7563);
   const [zoom, setZoom] = useState(4);
 
-  const products = JSON.parse(localStorage.getItem('products'));
+  const tours = JSON.parse(localStorage.getItem('tours'));
 
   // Initialize map when component mounts
   useEffect(() => {
@@ -37,7 +37,7 @@ const Map = () => {
     map.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
     map.on('load', async () => {
-      await loadMarker(map, products);
+      await loadMarker(map, tours);
     });
 
     map.on('move', () => {

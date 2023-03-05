@@ -9,13 +9,13 @@ import '../public/css/slide.scss';
 function Slide() {
   const [activeOption, setActiveOption] = useState(1);
 
-  const products = JSON.parse(localStorage.getItem('products'));
+  const tours = JSON.parse(localStorage.getItem('tours'));
 
   const title = [];
   const img = [];
   const duration = [];
 
-  products.data.data.forEach((el) => {
+  tours.data.data.forEach((el) => {
     title.push(el.name);
     img.push(el.imageCover);
     duration.push(el.duration);

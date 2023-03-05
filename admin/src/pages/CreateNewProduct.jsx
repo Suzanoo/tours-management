@@ -7,11 +7,7 @@ import { toast } from 'react-toastify';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import {
-  createNewProduct,
-  getAllProducts,
-  reset,
-} from '../features/product/productSlice';
+import { createNewTour, getAllTours, reset } from '../features/tour/tourSlice';
 
 import Spinner from '../components/Spinner';
 
@@ -23,7 +19,7 @@ import Spinner from '../components/Spinner';
 5).JSX Rendering
 */
 const options = ['easy', 'medium', 'difficulty'];
-function CreateNewProduct() {
+function CreateNewTour() {
   // 1).Initial state
   const initialState = {
     startLocation: {
@@ -59,8 +55,8 @@ function CreateNewProduct() {
   const dispatch = useDispatch();
 
   // 3).Access auth state in store and parse to variables
-  const { products, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.products
+  const { tours, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.tours
   );
 
   // 4).Events handlers
@@ -73,7 +69,7 @@ function CreateNewProduct() {
     if (isSuccess) {
       // navigate('/');
     }
-  }, [products, isError, isSuccess, message, navigate, dispatch]);
+  }, [tours, isError, isSuccess, message, navigate, dispatch]);
 
   const handleChange = (event) => {
     setFormData((prevState) => ({
@@ -102,7 +98,7 @@ function CreateNewProduct() {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const productData = {
+    const tourData = {
       startLocation,
       name,
       duration: +duration, // convert to int
@@ -114,7 +110,7 @@ function CreateNewProduct() {
       imageCover,
       startDates,
     };
-    dispatch(createNewProduct(productData));
+    dispatch(createNewTour(tourData));
   };
 
   if (isLoading) return <Spinner />;
@@ -123,7 +119,7 @@ function CreateNewProduct() {
   return (
     <>
       <section className="heading">
-        <p>Create New Product</p>
+        <p>Create New Tour</p>
       </section>
       <section className="form">
         <form onSubmit={onSubmit}>
@@ -249,4 +245,4 @@ function CreateNewProduct() {
   );
 }
 
-export default CreateNewProduct;
+export default CreateNewTour;

@@ -14,7 +14,7 @@ const globalErrorHandler = require('./backend/controller/errorController');
 
 const adminRoute = require(`${__dirname}/backend/routes/adminRoute`);
 const userRoute = require(`${__dirname}/backend/routes/userRoute`);
-const productRoute = require(`${__dirname}/backend/routes/productRoute`);
+const tourRoute = require(`${__dirname}/backend/routes/tourRoute`);
 const bookingRoute = require(`${__dirname}/backend/routes/bookingRoute`);
 const textGenRoute = require(`${__dirname}/backend/routes/textGenRoute`);
 
@@ -76,7 +76,7 @@ app.use((req, res, next) => {
 // ROUTE HANDLER ----------------------------------
 app.use('/api/v1/admin', adminRoute);
 app.use('/api/v1/users', userRoute);
-app.use('/api/v1/products', productRoute);
+app.use('/api/v1/tours', tourRoute);
 app.use('/api/v1/booking', bookingRoute);
 
 app.use('/api/v1/text-gen', textGenRoute);

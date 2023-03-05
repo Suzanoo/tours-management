@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import Dropdown from '../components/Dropdown';
 
-import { getAllProducts } from '../features/product/productSlice';
+import { getAllTours } from '../features/tour/tourSlice';
 
 function Home() {
   // initial
@@ -13,13 +13,13 @@ function Home() {
 
   // config
   const dispatch = useDispatch();
-  const { products, isError, isSuccess, message } = useSelector(
-    (state) => state.products
+  const { tours, isError, isSuccess, message } = useSelector(
+    (state) => state.tours
   );
 
   // dropdown option come from store object
   // TODO check if not Array
-  const options = products.data.data.map((el) => el.name);
+  const options = tours.data.data.map((el) => el.name);
 
   // event handlers
   useEffect(() => {
@@ -27,9 +27,8 @@ function Home() {
       toast.error(message);
     }
 
-    // if (!products) dispatch(getAllProducts());
-    dispatch(getAllProducts());
-  }, [products, isError, isSuccess, message, dispatch]);
+    dispatch(getAllTours());
+  }, [tours, isError, isSuccess, message, dispatch]);
 
   const handleDropdown = (value) => {
     setSelectedOption(value);
@@ -39,7 +38,7 @@ function Home() {
     <>
       <section>
         {/* Get all */}
-        <h2>Products List :</h2>
+        <h2>Tours List :</h2>
         <Dropdown
           options={options}
           onSelect={handleDropdown}
@@ -52,8 +51,8 @@ function Home() {
 
         {/* Create new */}
         <button className="btn">
-          <Link to="/new-product" className="btn btn-primary">
-            Create New Product
+          <Link to="/new-tour" className="btn btn-primary">
+            Create New Tour
           </Link>
         </button>
       </section>

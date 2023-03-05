@@ -22,6 +22,7 @@ const login = async (userData) => {
 const logout = async () => {
   await axios.get(API_URL + '/logout');
   localStorage.removeItem('user');
+  // localStorage.removeItem('tours'); // for plublic customers
 };
 
 // Forget password
