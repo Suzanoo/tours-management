@@ -6,7 +6,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 // CS
-// import 'bootstrap/dist/css/bootstrap.min.css'; // Not use in tailwind CSS
 import './public/js/main.js';
 
 const container = document.getElementById('root');

@@ -13,6 +13,7 @@ import authService from './authService';
 
 // Fetch user from localStorage & cast to JSON object
 const user = JSON.parse(localStorage.getItem('user'));
+const plan = JSON.parse(localStorage.getItem('plan'));
 
 // Initialize state
 const initialState = {
@@ -183,6 +184,7 @@ export const authSlice = createSlice({
       })
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
+        state.plan = null;
       });
   },
 });

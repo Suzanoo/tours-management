@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import { createNewTour, getAllTours, reset } from '../features/tour/tourSlice';
+import { createNewTour, reset } from '../features/tour/tourSlice';
 
 import Spinner from '../components/Spinner';
 

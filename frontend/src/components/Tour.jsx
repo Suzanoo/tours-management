@@ -1,8 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import generatePlan from '../features/tourPlan/tourPlanService';
-
+import {
+  generatePlan,
+  clearPlan,
+  reset,
+} from '../features/tourPlan/tourPlanSlice';
+import {
+  formatTextToHTML,
+  formatDescription,
+} from '../utils/formatDescription';
 import '../public/css/index.css';
 
 function Tour() {
@@ -13,8 +22,44 @@ function Tour() {
     options: '',
   };
 
+  const { plan, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.plan
+  );
+
+  const dispatch = useDispatch();
+  const navigation = useNavigate();
+
   const [formData, setFormData] = useState(initialState);
   const { start, destination, duration, options } = formData;
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+
+    if (isSuccess) {
+      document.getElementById('tour-plan').innerHTML = formatTextToHTML(
+        plan.data.choices
+      );
+      console.log(plan.data.choices);
+    }
+
+    dispatch(reset());
+  }, [plan, isError, isSuccess, message, dispatch, navigation]);
+
+  if (isLoading)
+    return (
+      <>
+        <div className="flex items-center justify-center space-x-2">
+          <div
+            id="spinner"
+            className="h-8 w-8 animate-spin rounded-full border-4 border-solid border-current 
+              border-r-transparent align-[-0.125em] text-danger motion-reduce:animate-[spin_1.5s_linear_infinite]"
+            role="status"
+          ></div>
+        </div>
+      </>
+    );
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -23,7 +68,7 @@ function Tour() {
     }));
   };
 
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
 
     const tourData = {
@@ -34,29 +79,22 @@ function Tour() {
     };
 
     try {
-      document.getElementById('spinner').style.display = 'block';
-      const plan = await generatePlan(tourData);
-      document.getElementById('spinner').style.display = 'none';
-      document.getElementById('tour-plan').innerHTML = plan;
+      dispatch(generatePlan(tourData));
     } catch (error) {
-      document.getElementById('spinner').style.display = 'none';
       toast.error(error.message);
+      console.error(error.stack);
     }
+  };
+
+  const resetForm = () => {
+    setFormData(initialState);
+    dispatch(clearPlan());
   };
 
   return (
     <>
       <div className="flex justify-center mx-auto p-6">
         <div className="flex-col w-2/3">
-          <div className="flex items-center justify-center space-x-2">
-            <div
-              id="spinner"
-              className=" hidden h-8 w-8 animate-spin rounded-full border-4 border-solid border-current \
-              border-r-transparent align-[-0.125em] text-warning motion-reduce:animate-[spin_1.5s_linear_infinite]"
-              role="status"
-            ></div>
-          </div>
-
           <form
             className=" bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
             onSubmit={onSubmit}
@@ -71,7 +109,7 @@ function Tour() {
                 Start:
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 \
+                className="shadow appearance-none border rounded w-full py-2 
             px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
                 id="start"
@@ -88,7 +126,7 @@ function Tour() {
                 Destination:
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 \
+                className="shadow appearance-none border rounded w-full py-2 
             px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
                 id="destination"
@@ -105,7 +143,7 @@ function Tour() {
                 Duration: Days
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 \
+                className="shadow appearance-none border rounded w-full py-2 px-3 
              text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="number"
                 id="duration"
@@ -122,7 +160,7 @@ function Tour() {
                 Other Request
               </label>
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 \
+                className="shadow appearance-none border rounded w-full py-2 px-3 
              text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"
                 id="options"
@@ -133,13 +171,24 @@ function Tour() {
               />
             </div>
 
-            <button
-              type="submit"
-              className="baseline text-white bg-brightRed hover:bg-brightRedSupLight \
-              font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            >
-              Create Plan
-            </button>
+            <div className="flex">
+              <button
+                type="submit"
+                className="baseline text-white bg-darkBlue hover:bg-brightRedSupLight 
+              font-bold py-2 px-4 mr-4 rounded focus:outline-none focus:shadow-outline"
+              >
+                Create Plan
+              </button>
+
+              <button
+                type="submit"
+                className="baseline text-white bg-brightRed hover:bg-brightRedSupLight 
+              font-bold py-2 px-4  rounded focus:outline-none focus:shadow-outline"
+                onClick={resetForm}
+              >
+                Clear
+              </button>
+            </div>
           </form>
 
           <div

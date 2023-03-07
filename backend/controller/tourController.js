@@ -18,6 +18,7 @@ const geoLocation = async (address) => {
 exports.createTour = catchAsync(async (req, res, next) => {
   const tourData = req.body;
 
+  // startLocation field:
   const startLocationGeo = await geoLocation(tourData.startLocation.address);
   // console.log(startLocationGeo);
 
@@ -28,6 +29,7 @@ exports.createTour = catchAsync(async (req, res, next) => {
     address: tourData.address, // undefined in model pre-hook later
   };
 
+  // location field:
   if ('location' in tourData === true) {
     const locationGeo = await geoLocation(tourData.location.address);
     tourData.location = {

@@ -1,19 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import tourService from './tourService';
+import tourPlanService from './tourPlanService';
 
-/*
-1.Fetch tour from localStorage & cast to JSON object
-2.Initialize state
-3.Create async action-reducer:
-4.Create slice
-*/
-
-// Fetch tours from localStorage & cast to JSON object
-const tours = JSON.parse(localStorage.getItem('tours'));
+// Fetch plan from localStorage & cast to JSON object
+const plan = JSON.parse(localStorage.getItem('plan'));
 
 // Initialize state
 const initialState = {
-  tours: tours ? tours : null,
+  plan: plan ? plan : null,
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -21,13 +14,13 @@ const initialState = {
 };
 
 // Create async action-reducer
-export const getAllTours = createAsyncThunk(
+export const generatePlan = createAsyncThunk(
   // Action type
-  'tours/get_all_tours',
+  'plan/gen',
   // Payload
-  async (thunkAPI) => {
+  async (tourData, thunkAPI) => {
     try {
-      return await tourService.getAll();
+      return await tourPlanService.generatePlan(tourData);
     } catch (err) {
       const message =
         err.message ||
@@ -38,9 +31,15 @@ export const getAllTours = createAsyncThunk(
   }
 );
 
+// Create async action-reducer: logout
+export const clearPlan = createAsyncThunk(
+  // async action type
+  'auth/logout'
+);
+
 // Slice
-export const tourSlice = createSlice({
-  name: 'tours',
+export const tourPlanSlice = createSlice({
+  name: 'plan',
   initialState,
   reducers: {
     reset: (state) => {
@@ -53,25 +52,28 @@ export const tourSlice = createSlice({
   // Manage payload life cycle
   extraReducers: (builder) => {
     builder
-      .addCase(getAllTours.pending, (state) => {
+      .addCase(generatePlan.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getAllTours.fulfilled, (state, action) => {
+      .addCase(generatePlan.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.tours = action.payload;
+        state.plan = action.payload;
       })
-      .addCase(getAllTours.rejected, (state, action) => {
+      .addCase(generatePlan.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;
-        state.tours = null;
+        state.plan = null;
+      })
+      .addCase(clearPlan.fulfilled, (state) => {
+        state.plan = null;
       });
   },
 });
 
 // Action
-export const { reset } = tourSlice.actions;
+export const { reset } = tourPlanSlice.actions;
 
 // Reducer
-export default tourSlice.reducer;
+export default tourPlanSlice.reducer;

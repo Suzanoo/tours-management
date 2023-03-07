@@ -2,14 +2,9 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaSignInAlt } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { login, reset } from '../features/auth/authSlice';
-
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Spinner from 'react-bootstrap/Spinner';
-import FormGroup from 'react-bootstrap/esm/FormGroup';
+import Spinner from '../components/Spinner';
 
 /*
 1).Define initial blank form
@@ -68,45 +63,83 @@ function Login() {
     dispatch(login(userData)); // update state
   };
 
-  if (isLoading) return <Spinner animation="border" />;
+  if (isLoading)
+    return (
+      <>
+        <div className="flex items-center justify-center space-x-2">
+          <div
+            id="spinner"
+            className=" hidden h-8 w-8 animate-spin rounded-full border-4 border-solid border-current 
+              border-r-transparent align-[-0.125em] text-warning motion-reduce:animate-[spin_1.5s_linear_infinite]"
+            role="status"
+          ></div>
+        </div>
+      </>
+    );
 
   // 5).
   return (
-    <>
-      <section className="form-group">
-        <form onSubmit={onSubmit}>
-          <div className="form-group">
+    <div className="flex justify-center mx-auto p-6">
+      <div className="flex-col w-2/3">
+        <form
+          className=" bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+          onSubmit={onSubmit}
+        >
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Email:
+            </label>
             <input
+              className="shadow appearance-none border rounded w-full py-2 
+            px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               type="email"
-              className="form-control"
               id="email"
               name="email"
               value={email}
-              placeholder="Email Address"
+              placeholder=""
               onChange={onChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="password"
-              className="form-control"
-              id="password"
-              name="password"
-              value={password}
-              placeholder="Password"
-              onChange={onChange}
+              required
             />
           </div>
 
-          <div className="form-group">
-            <button type="submit" className="btn-submit .btn:hover">
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Password:
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 
+            px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              type="password"
+              id="password"
+              name="password"
+              value={password}
+              placeholder="..."
+              onChange={onChange}
+              required
+            />
+          </div>
+
+          <div>
+            <button
+              type="submit"
+              className="baseline text-white bg-brightRed hover:bg-brightRedSupLight 
+              font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
               Login
             </button>
+            <Link to="/forgot-pwd" className="pl-8 text-blue-500">
+              Forget Password!
+            </Link>
           </div>
-          <Link to="/forgot-pwd">Forget Password!</Link>
+          <div className="mt-4">
+            Don't have account?{' '}
+            <Link to="/register" className="pl-4 text-blue-500 text-sm">
+              Signup
+            </Link>
+          </div>
         </form>
-      </section>
-    </>
+      </div>
+    </div>
   );
 }
 

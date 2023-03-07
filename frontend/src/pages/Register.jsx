@@ -4,8 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { register, reset } from '../features/auth/authSlice';
-import Spinner from 'react-bootstrap/Spinner';
-
 /*
 1).Define initial blank form
 2).Configure form fields and hooks required
@@ -31,7 +29,7 @@ function Register() {
   const dispatch = useDispatch();
 
   // 3).Access auth state in store and parse to variables
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
+  const { user, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
 
@@ -72,69 +70,101 @@ function Register() {
     }
   };
 
-  if (isLoading) return <Spinner animation="border" />;
-
   //5).JSX Rendering
   return (
-    <>
-      <section className="heading">
-        <p>Hello Welcome ~^^</p>
-      </section>
-      <section className="form">
-        <form onSubmit={onSubmit}>
-          <div className="form-group">
+    <div className="flex justify-center mx-auto p-6">
+      <div className="flex-col w-2/3">
+        <div className="flex items-center justify-center space-x-2">
+          <div
+            id="spinner"
+            className=" hidden h-8 w-8 animate-spin rounded-full border-4 border-solid border-current 
+              border-r-transparent align-[-0.125em] text-warning motion-reduce:animate-[spin_1.5s_linear_infinite]"
+            role="status"
+          ></div>
+        </div>
+
+        <form
+          className=" bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+          onSubmit={onSubmit}
+        >
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Name:
+            </label>
             <input
+              className="shadow appearance-none border rounded w-full py-2 
+            px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               type="text"
-              className="form-control"
               id="name"
               name="name"
               value={name}
-              placeholder="Name"
+              placeholder=""
               onChange={onChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="email"
-              className="form-control"
-              id="email"
-              name="email"
-              value={email}
-              placeholder="Email Address"
-              onChange={onChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="password"
-              className="form-control"
-              id="password"
-              name="password"
-              value={password}
-              placeholder="Password"
-              onChange={onChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="password"
-              className="form-control"
-              id="passwordConfirm"
-              name="passwordConfirm"
-              value={passwordConfirm}
-              placeholder="Password Confirm"
-              onChange={onChange}
+              required
             />
           </div>
 
-          <div className="form-group">
-            <button type="submit" className="btn-submit .btn:hover">
-              Submit
-            </button>
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Email:
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 
+            px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              type="email"
+              id="email"
+              name="email"
+              value={email}
+              placeholder=""
+              onChange={onChange}
+              required
+            />
           </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Password:
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 
+            px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              type="password"
+              id="password"
+              name="password"
+              value={password}
+              placeholder="..."
+              onChange={onChange}
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2">
+              Password Confirm:
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 
+            px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              type="password"
+              id="passwordConfirm"
+              name="passwordConfirm"
+              value={passwordConfirm}
+              placeholder="..."
+              onChange={onChange}
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="baseline text-white bg-brightRed hover:bg-brightRedSupLight 
+              font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            Register
+          </button>
         </form>
-      </section>
-    </>
+      </div>
+    </div>
   );
 }
 
