@@ -42,9 +42,9 @@ const textCompletion = async (req, res) => {
   // 2) ------------------------------
   // const ln = req.body.language === 'en' ? 'English' : 'Thai';
 
-  const prompt = `Give me the short travel plan, which I start journey from ${req.body.start} \n
-  to ${req.body.destination} in ${req.body.duration} days.\n
-  The plan comes with budget approximate, agency contact(mobile phone number or email address if possible),\n
+  const prompt = `Give me the short travel plan, which I start journey from ${req.body.start}
+  to ${req.body.destination} in ${req.body.duration} days.
+  The plan comes with budget approximate, agency contact(mobile phone number or email address if possible),
    accommodation and include this options ${req.body.options} too.`;
 
   try {

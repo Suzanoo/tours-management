@@ -11,6 +11,7 @@ import {
 import {
   formatTextToHTML,
   formatDescription,
+  renderTripBlock,
 } from '../utils/formatDescription';
 import '../public/css/index.css';
 
@@ -40,8 +41,10 @@ function Tour() {
     if (isSuccess) {
       document.getElementById('tour-plan').innerHTML = formatTextToHTML(
         plan.data.choices
-      );
+      ).html;
+
       console.log(plan.data.choices);
+      console.log(formatTextToHTML(plan.data.choices));
     }
 
     dispatch(reset());

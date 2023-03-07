@@ -28,35 +28,5 @@ export function formatTextToHTML(str) {
   console.log(html);
 
   // Return the formatted HTML string
-  return <div className="text-gray-700 text-sm">{html}</div>;
-}
-
-export function formatDescription(description) {
-  const regex =
-    /Day (\d+):\s(.+?)\.\sBudget:\sApprox.\s\$(\d+)\.\sAgency:\s(.+?)\s\((.+?)\)\.\sAccommodation:\s(.+?)\s\((.+?)\)\./g;
-
-  let match;
-  const days = [];
-
-  while ((match = regex.exec(description)) !== null) {
-    const day = match[1];
-    const activity = match[2];
-    const budget = match[3];
-    const agencyName = match[4];
-    const agencyUrl = match[5];
-    const accommodationName = match[6];
-    const accommodationUrl = match[7];
-
-    days.push({
-      day,
-      activity,
-      budget,
-      agencyName,
-      agencyUrl,
-      accommodationName,
-      accommodationUrl,
-    });
-  }
-
-  return <div className="text-gray-700 text-sm">{days}</div>;
+  return { html };
 }
