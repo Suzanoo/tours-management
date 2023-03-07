@@ -33,7 +33,7 @@ const MapNew = (props) => {
 
     // Add marker
     // Marker from database
-    if (plan.data === null || plan.data === undefined) {
+    if (plan === null || plan === undefined) {
       map.on('load', () => {
         tours.data.data.forEach((el) => {
           new mapboxgl.Marker()
@@ -51,6 +51,14 @@ const MapNew = (props) => {
       plan.data.location.forEach((el) => {
         new mapboxgl.Marker().setLngLat(el.coordinates).addTo(map);
       });
+
+      // Fit map to the boundary of the plan
+      const coordinates = plan.data.location.map((el) => el.coordinates);
+      const bounds = coordinates.reduce(
+        (bounds, coord) => bounds.extend(coord),
+        new mapboxgl.LngLatBounds()
+      );
+      map.fitBounds(bounds, { padding: 50 });
     }
 
     // Move handlers

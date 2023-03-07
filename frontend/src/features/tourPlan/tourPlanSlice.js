@@ -16,7 +16,7 @@ const initialState = {
 // Create async action-reducer
 export const generatePlan = createAsyncThunk(
   // Action type
-  'plan/gen',
+  'plan/gen-plan',
   // Payload
   async (tourData, thunkAPI) => {
     try {
@@ -34,7 +34,17 @@ export const generatePlan = createAsyncThunk(
 // Create async action-reducer: logout
 export const clearPlan = createAsyncThunk(
   // async action type
-  'auth/logout'
+  'auth/clear-plan',
+  (thunkAPI) => {
+    try {
+    } catch (err) {
+      const message =
+        err.message ||
+        (err.response && err.response.data && err.response.data.message) ||
+        err.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
 );
 
 // Slice

@@ -1,5 +1,6 @@
 const geocoder = require('./geocode');
 const AppError = require('./appError');
+const extractStr = require('./extractStr');
 
 // CONFIGURATION
 // https://github.com/openai/openai-node
@@ -21,7 +22,9 @@ const textCompletion = async (req, res) => {
   // 1) ------------------------------
   console.log(req.body);
 
-  const dest = req.body.destination.split(' ');
+  // const dest = req.body.destination.split(' ');
+  const dest = extractStr(req.body.destination);
+  console.log(dest);
   const locationReq = [req.body.start, ...dest];
   const location = [];
 
@@ -40,9 +43,7 @@ const textCompletion = async (req, res) => {
   }
 
   // 2) ------------------------------
-  // const ln = req.body.language === 'en' ? 'English' : 'Thai';
-
-  const prompt = `Give me the short travel plan, which I start journey from ${req.body.start}
+  const prompt = `Give me the travel plan, which I start journey from ${req.body.start}
   to ${req.body.destination} in ${req.body.duration} days.
   The plan comes with budget approximate, agency contact(mobile phone number or email address if possible),
    accommodation and include this options ${req.body.options} too.`;

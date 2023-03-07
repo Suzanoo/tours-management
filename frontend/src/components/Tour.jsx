@@ -8,11 +8,7 @@ import {
   clearPlan,
   reset,
 } from '../features/tourPlan/tourPlanSlice';
-import {
-  formatTextToHTML,
-  formatDescription,
-  renderTripBlock,
-} from '../utils/formatDescription';
+import { formatTextToHTML } from '../utils/formatDescription';
 import '../public/css/index.css';
 
 function Tour() {
@@ -43,8 +39,8 @@ function Tour() {
         plan.data.choices
       ).html;
 
-      console.log(plan.data.choices);
-      console.log(formatTextToHTML(plan.data.choices));
+      // console.log(plan.data.choices);
+      // console.log(formatTextToHTML(plan.data.choices));
     }
 
     dispatch(reset());
@@ -91,7 +87,7 @@ function Tour() {
 
   const resetForm = () => {
     setFormData(initialState);
-    dispatch(clearPlan());
+    // dispatch(clearPlan()); // If you want to reset "plan" value instore back to null
   };
 
   return (

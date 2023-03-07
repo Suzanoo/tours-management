@@ -25,7 +25,7 @@ export function formatTextToHTML(str) {
   // Wrap the <li> tags in an <ul> tag
   html = '<ul>' + html + '</ul>';
 
-  console.log(html);
+  // console.log(html);
 
   // Return the formatted HTML string
   return { html };
