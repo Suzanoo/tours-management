@@ -1,3 +1,5 @@
+// Get request from "/text-gen" then prepare efore send to Mapquest API
+
 const extractStr = (str) => {
   if (str.includes(',')) {
     // If the string contains commas, split it by comma

@@ -9,7 +9,7 @@ import {
   reset,
 } from '../features/tourPlan/tourPlanSlice';
 import { formatTextToHTML } from '../utils/formatDescription';
-import '../public/css/index.css';
+import '../public/css/style.css';
 
 function Tour() {
   const initialState = {

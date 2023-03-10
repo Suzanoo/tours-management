@@ -140,17 +140,21 @@ exports.protect = catchAsync(async (req, res, next) => {
       new AppError('You are not logged in! Please log in to get access.', 401)
     );
   }
+  console.log(req.headers.cookie);
 
   // 1) Getting token and check of it's there
   let token;
+
   // Get from headers
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
-    // Or get from AXIOS headers
-  } else if (req.headers.cookie.split('; ')[1].split('=')[1]) {
+  }
+
+  // Or get from AXIOS headers
+  else if (req.headers.cookie.split('; ')[1].split('=')[1]) {
     token = req.headers.cookie.split('; ')[1].split('=')[1];
   }
 
@@ -250,6 +254,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 // ----------------------
 // RESET PASSWORD
 exports.resetPassword = catchAsync(async (req, res, next) => {
+  console.log(req.params);
   // 1.Encrypt token that recieved as an url param and compare it with the token saved in the database,
   const encryptedTokenString = crypto
     .createHash('sha256')

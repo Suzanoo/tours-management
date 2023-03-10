@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import Header from './components/Header';
 import Nav from './components/Nav';
 import Landing from './pages/Landing';
 
@@ -26,7 +25,7 @@ function App() {
             <Route path="/forgot-pwd" element={<ForgotPwd />} />
 
             <Route path="/:token" element={<ResetPwd />} />
-            {/* TODO : Solve to use  path="/reset-pwd:token" instead */}
+            {/* <Route path="/reset-pwd:token" element={<ResetPwd />} /> */}
           </Routes>
           <Footer />
         </div>

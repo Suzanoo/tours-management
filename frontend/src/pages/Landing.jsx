@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Slide from '../components/Slide';
 import Map from '../components/Map';
@@ -9,6 +9,7 @@ import { reset } from '../features/tourPlan/tourPlanSlice';
 import { getAllTours } from '../features/tour/tourSlice';
 
 function Landing() {
+  const tours = useSelector((state) => state.tours.tours);
   const dispatch = useDispatch();
 
   // First fetch
@@ -20,8 +21,8 @@ function Landing() {
   return (
     <>
       <div className="container py-4 rounded md:rounded-lg">
-        <Slide />
-        <Map />
+        {tours && <Slide />}
+        {tours && <Map />}
         <Tour />
       </div>
     </>

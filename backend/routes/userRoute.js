@@ -15,7 +15,12 @@ router.use(authCtrl.protect);
 
 router.get('/personal', userCtrl.getMe, userCtrl.getUser);
 router.patch('/updateMyPassword', authCtrl.updatePassword);
-router.patch('/updateUserData', userCtrl.updateUserData);
+router.patch(
+  '/updateUserData',
+  userCtrl.uploadProfilePicture,
+  userCtrl.resizeProfilePicture,
+  userCtrl.updateUserData
+);
 router.delete('/deleteCurrentUser', userCtrl.deleteCurrentUser);
 
 // Admin controller

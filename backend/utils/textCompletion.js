@@ -26,6 +26,7 @@ const textCompletion = async (req, res) => {
   const dest = extractStr(req.body.destination);
   console.log(dest);
   const locationReq = [req.body.start, ...dest];
+
   const location = [];
 
   try {
@@ -46,7 +47,7 @@ const textCompletion = async (req, res) => {
   const prompt = `Give me the travel plan, which I start journey from ${req.body.start}
   to ${req.body.destination} in ${req.body.duration} days.
   The plan comes with budget approximate, agency contact(mobile phone number or email address if possible),
-   accommodation and include this options ${req.body.options} too.`;
+   accommodation, the other recommend from you and include this options ${req.body.options} if it's there.`;
 
   try {
     const response = await openai.createCompletion({
