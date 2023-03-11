@@ -232,7 +232,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     await handleEmail({
       email: user.email,
       subject: 'Your password reset token (valid for 15 min)',
-      message,
+      url: URL,
     });
 
     res.status(200).json({

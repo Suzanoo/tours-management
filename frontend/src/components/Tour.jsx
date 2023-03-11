@@ -46,20 +46,6 @@ function Tour() {
     dispatch(reset());
   }, [plan, isError, isSuccess, message, dispatch, navigation]);
 
-  if (isLoading)
-    return (
-      <>
-        <div className="flex items-center justify-center space-x-2">
-          <div
-            id="spinner"
-            className="h-8 w-8 animate-spin rounded-full border-4 border-solid border-current 
-              border-r-transparent align-[-0.125em] text-danger motion-reduce:animate-[spin_1.5s_linear_infinite]"
-            role="status"
-          ></div>
-        </div>
-      </>
-    );
-
   const onChange = (e) => {
     setFormData((prevState) => ({
       ...prevState,
@@ -89,6 +75,20 @@ function Tour() {
     setFormData(initialState);
     // dispatch(clearPlan()); // If you want to reset "plan" value instore back to null
   };
+
+  if (isLoading)
+    return (
+      <>
+        <div className="flex items-center justify-center space-x-2">
+          <div
+            id="spinner"
+            className="h-8 w-8 animate-spin rounded-full border-4 border-solid border-current 
+              border-r-transparent align-[-0.125em] text-danger motion-reduce:animate-[spin_1.5s_linear_infinite]"
+            role="status"
+          ></div>
+        </div>
+      </>
+    );
 
   return (
     <>

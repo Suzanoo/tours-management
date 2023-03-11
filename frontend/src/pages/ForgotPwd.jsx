@@ -9,7 +9,9 @@ const ForgotPasswordPage = () => {
   const [formFields, setFormFields] = useState({ email: '' });
   const { email } = formFields;
 
-  const { isError, isSuccess, message } = useSelector((state) => state.auth);
+  const { isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,6 +42,20 @@ const ForgotPasswordPage = () => {
     // dispatch the function that sends the reset token to the email address
     dispatch(forgotPwd(userData));
   };
+
+  if (isLoading)
+    return (
+      <>
+        <div className="flex items-center justify-center space-x-2">
+          <div
+            id="spinner"
+            className="h-8 w-8 animate-spin rounded-full border-4 border-solid border-current 
+              border-r-transparent align-[-0.125em] text-danger motion-reduce:animate-[spin_1.5s_linear_infinite]"
+            role="status"
+          ></div>
+        </div>
+      </>
+    );
 
   return (
     <div className="flex justify-center mx-auto p-6">

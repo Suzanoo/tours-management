@@ -18,7 +18,32 @@ const handleEmail = async (options) => {
     to: options.email,
     subject: options.subject,
     text: options.message,
-    // html:
+    html: `
+        <html>
+          <head>
+            <meta charset="utf-8" />
+            <title>Forgot Password</title>
+          </head>
+          <body>
+            <p>Hi,</p>
+            <p>
+              We have received a request to reset the password for your account.
+              To continue, please click on the button below to create a new
+              password:
+            </p>
+            <a href=${options.URL}>
+              <button style="background-color: #4CAF50; color: white; padding: 14px 20px; margin: 8px 0; border: none; cursor: pointer;">
+                Create New Password
+              </button>
+            </a>
+            <p>
+              If you did not request this, please ignore this email and your
+              password will remain unchanged.
+            </p>
+            <p>Best regards,</p>
+            <p>The MyApp Team</p>
+          </body>
+        </html>`,
   };
 
   // 3) Actually send the email
