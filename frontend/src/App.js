@@ -11,6 +11,8 @@ import ForgotPwd from './pages/ForgotPwd';
 import ResetPwd from './pages/ResetPwd';
 import Footer from './components/Footer';
 
+import ProfilePicture from './components/ProfilePicture';
+
 function App() {
   return (
     <>
@@ -26,6 +28,8 @@ function App() {
 
             <Route path="/:token" element={<ResetPwd />} />
             {/* <Route path="/reset-pwd:token" element={<ResetPwd />} /> */}
+
+            <Route path="/updateProfilePicture" element={<ProfilePicture />} />
           </Routes>
           <Footer />
         </div>

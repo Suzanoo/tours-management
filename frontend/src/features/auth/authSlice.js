@@ -13,7 +13,6 @@ import authService from './authService';
 
 // Fetch user from localStorage & cast to JSON object
 const user = JSON.parse(localStorage.getItem('user'));
-const plan = JSON.parse(localStorage.getItem('plan'));
 
 // Initialize state
 const initialState = {
@@ -112,6 +111,26 @@ export const resetPwd = createAsyncThunk(
   }
 );
 
+//
+export const updateProfilePicture = createAsyncThunk(
+  // async action type
+  'auth/updateProfilePicture',
+  // function return payload
+  async (formData, thunkAPI) => {
+    try {
+      return await authService.updateProfilePicture(formData);
+    } catch (err) {
+      const message =
+        err.message ||
+        (err.response && err.response.data && err.response.data.message) ||
+        err.toString();
+      // console.log(err.response.data);
+      // alert(err.response.data.message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 // Create slice
 export const authSlice = createSlice({
   name: 'auth',
@@ -181,6 +200,19 @@ export const authSlice = createSlice({
         state.isError = true;
         state.message = action.payload;
         state.user = null;
+      })
+      .addCase(updateProfilePicture.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateProfilePicture.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
+      })
+      .addCase(updateProfilePicture.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
       })
       .addCase(logout.fulfilled, (state) => {
         state.user = null;

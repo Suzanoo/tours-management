@@ -31,6 +31,7 @@ const multerStorage = multer.memoryStorage();
 
 // filter image upload type
 const multerFilter = (req, file, cb) => {
+  console.log('upladProfilePictur()', file);
   if (file.mimetype.startsWith('image')) {
     cb(null, true);
   } else {

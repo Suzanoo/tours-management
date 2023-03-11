@@ -140,7 +140,7 @@ exports.protect = catchAsync(async (req, res, next) => {
       new AppError('You are not logged in! Please log in to get access.', 401)
     );
   }
-  console.log(req.headers.cookie);
+  // console.log('Protect route', req.headers.cookie);
 
   // 1) Getting token and check of it's there
   let token;
@@ -157,6 +157,8 @@ exports.protect = catchAsync(async (req, res, next) => {
   else if (req.headers.cookie.split('; ')[1].split('=')[1]) {
     token = req.headers.cookie.split('; ')[1].split('=')[1];
   }
+
+  // console.log('Protect route', token);
 
   if (!token) {
     return next(

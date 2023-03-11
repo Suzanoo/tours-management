@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_URL = 'api/v1/users';
 
-// Register endpoint
+// Register
 const register = async (userData) => {
   const response = await axios.post(API_URL + '/signup', userData);
   if (response.data)
@@ -10,7 +10,7 @@ const register = async (userData) => {
   return response.data;
 };
 
-// Login endpoint
+// Login
 const login = async (userData) => {
   const response = await axios.post(API_URL + '/login', userData);
   if (response.data)
@@ -18,7 +18,7 @@ const login = async (userData) => {
   return response.data;
 };
 
-// Logout user
+// Logout
 const logout = async () => {
   await axios.get(API_URL + '/logout');
   localStorage.removeItem('user');
@@ -32,13 +32,22 @@ const forgotPwd = async (userData) => {
 };
 
 // Reset password
-
 const resetPwd = async (data) => {
   const response = await axios.patch(
     API_URL + `/reset-pwd/${data.token}`,
     data.userData
   );
   return response;
+};
+
+// Update Profile Picture
+const updateProfilePicture = async (formData) => {
+  const response = await axios.patch(API_URL + '/updateUserData', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+  if (response.data)
+    localStorage.setItem('user', JSON.stringify(response.data));
+  return response.data;
 };
 
 // Create services
@@ -48,6 +57,7 @@ const authService = {
   logout,
   forgotPwd,
   resetPwd,
+  updateProfilePicture,
 };
 
 export default authService;
