@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
 
-const geocoder = require('../utils/geocode');
-
 const tourSchema = new mongoose.Schema(
   {
     name: {
@@ -80,8 +78,8 @@ const tourSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    // User define address then Mapquest API to set coordinates & formattedAddress
     startLocation: {
-      // GeoJSON format
       type: {
         type: String,
         enum: ['Point'],
@@ -112,13 +110,13 @@ const tourSchema = new mongoose.Schema(
     guides: [
       {
         type: mongoose.Schema.ObjectId,
-        ref: 'users',
+        ref: 'User',
       },
     ],
   },
   {
     toJSON: { virtuals: true },
-    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
   }
 );
 
@@ -130,6 +128,13 @@ tourSchema.index({ startLocation: '2dsphere' });
 // Calculate weekly duration of tour
 tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
+});
+
+// Virtual populate
+tourSchema.virtual('reviews', {
+  ref: 'Review', //name of the model that the virtual property refers to
+  foreignField: 'tour', //specifies the field in the Review model that refers to the Tour model
+  localField: '_id', // specifies the field in the Tour model that the Review model refers to
 });
 
 // DOCUMENT MIDDLEWARE
@@ -170,6 +175,14 @@ tourSchema.pre(/^find/, function (next) {
   next();
 });
 
+tourSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'reviews',
+    select: 'review rating user',
+  });
+  next();
+});
+
 tourSchema.post(/^find/, function (docs, next) {
   console.log(`Query took ${Date.now() - this.start} milliseconds!`);
   next();
@@ -178,6 +191,6 @@ tourSchema.post(/^find/, function (docs, next) {
 // AGGREGATION MIDDLEWARE
 
 // REGISTER
-const Tour = mongoose.model('tours', tourSchema);
+const Tour = mongoose.model('Tour', tourSchema);
 
 module.exports = Tour;

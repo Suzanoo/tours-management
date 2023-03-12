@@ -50,6 +50,20 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre('save', async function (next) {
+  // Check if email is modified or not
+  if (!this.isModified('email')) return next();
+
+  // Check if email already exists
+  const emailExists = await this.constructor.findOne({ email: this.email });
+  if (emailExists) {
+    const error = new Error('Email already exists');
+    error.statusCode = 400;
+    return next(error);
+  }
+  next();
+});
+
+userSchema.pre('save', async function (next) {
   // Only run this function if password was actually modified
   if (!this.isModified('password')) return next();
 
@@ -117,6 +131,6 @@ userSchema.methods.generateTokenForPasswordReset = function () {
   return resetToken;
 };
 
-const User = mongoose.model('users', userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;

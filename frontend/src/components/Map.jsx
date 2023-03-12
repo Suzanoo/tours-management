@@ -9,7 +9,7 @@ mapboxgl.accessToken =
   'pk.eyJ1Ijoic3V6YW5vbyIsImEiOiJjbGVmc2t4eTYwMDBtNDZxbDkyNmlqdDhkIn0.T78HnlAr5OHoHOh1-JN99g';
 
 // Map
-const MapNew = (props) => {
+const Map = () => {
   // Initialize
   const { plan } = useSelector((state) => state.plan);
   const mapContainerRef = useRef(null);
@@ -17,9 +17,9 @@ const MapNew = (props) => {
   const [lat, setLat] = useState(13.7563);
   const [zoom, setZoom] = useState(4);
 
-  useEffect(() => {
-    const tours = JSON.parse(localStorage.getItem('tours'));
+  const tours = useSelector((state) => state.tours.tours);
 
+  useEffect(() => {
     // Mabbox config
     const map = new mapboxgl.Map({
       container: mapContainerRef.current,
@@ -41,6 +41,17 @@ const MapNew = (props) => {
             .addTo(map);
         });
       });
+
+      // Fit map to the boundary of the plan
+      const coordinates = tours.data.data.map(
+        (el) => el.startLocation.coordinates
+      );
+      const bounds = coordinates.reduce(
+        (bounds, coord) => bounds.extend(coord),
+        new mapboxgl.LngLatBounds()
+      );
+      map.fitBounds(bounds, { padding: 50 });
+
       // Marker depend on user tour plan
     } else {
       const markers = document.getElementsByClassName('mapboxgl-marker');
@@ -70,7 +81,7 @@ const MapNew = (props) => {
 
     // Clean up on unmount
     return () => map.remove();
-  }, [plan]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [plan, tours]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
@@ -84,4 +95,4 @@ const MapNew = (props) => {
   );
 };
 
-export default MapNew;
+export default Map;

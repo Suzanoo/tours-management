@@ -6,7 +6,7 @@ const API_URL = 'api/v1/tours';
 const getAll = async () => {
   // localStorage.removeItem('tours');
 
-  const response = await axios.get(API_URL + '/');
+  const response = await axios.get(API_URL + '/?limit=5');
   // console.log(response.data);
   if (response.data)
     localStorage.setItem('tours', JSON.stringify(response.data));

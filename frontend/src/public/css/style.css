@@ -1,11 +1,5 @@
-.rounded-Btn {
-  border-radius: 9999px;
-}
-
-.hidden-menu {
-  display: none;
-}
-
-.show-menu:hover ~ .hidden-menu {
+.star-rating-container {
   display: flex;
+  justify-content: center;
+  width: 100px;
 }

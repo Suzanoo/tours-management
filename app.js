@@ -15,6 +15,7 @@ const globalErrorHandler = require('./backend/controller/errorController');
 const adminRoute = require(`${__dirname}/backend/routes/adminRoute`);
 const userRoute = require(`${__dirname}/backend/routes/userRoute`);
 const tourRoute = require(`${__dirname}/backend/routes/tourRoute`);
+const reviewRoute = require(`${__dirname}/backend/routes/reviewRoute`);
 const bookingRoute = require(`${__dirname}/backend/routes/bookingRoute`);
 const textGenRoute = require(`${__dirname}/backend/routes/textGenRoute`);
 
@@ -63,7 +64,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Serving static files
-app.use(express.static(`${__dirname}/static`));
+app.use(express.static(`${__dirname}/public`));
 
 // middleware for showing request time
 app.use((req, res, next) => {
@@ -78,6 +79,7 @@ app.use((req, res, next) => {
 app.use('/api/v1/admin', adminRoute);
 app.use('/api/v1/users', userRoute);
 app.use('/api/v1/tours', tourRoute);
+app.use('/api/v1/reviews', reviewRoute);
 app.use('/api/v1/booking', bookingRoute);
 
 app.use('/api/v1/text-gen', textGenRoute);

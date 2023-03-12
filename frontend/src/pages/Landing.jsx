@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Slide from '../components/Slide';
 import Map from '../components/Map';
 import Tour from '../components/Tour';
+import StarRating from '../components/StarRating';
 
 import { reset } from '../features/tourPlan/tourPlanSlice';
 import { getAllTours } from '../features/tour/tourSlice';

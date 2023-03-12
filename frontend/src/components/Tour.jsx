@@ -73,7 +73,7 @@ function Tour() {
 
   const resetForm = () => {
     setFormData(initialState);
-    // dispatch(clearPlan()); // If you want to reset "plan" value instore back to null
+    dispatch(clearPlan());
   };
 
   if (isLoading)

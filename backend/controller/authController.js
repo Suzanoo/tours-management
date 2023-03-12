@@ -52,7 +52,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
     passwordChangedAt: req.body.passwordChangedAt,
-    role: 'user',
+    role: req.body.role,
   });
 
   createSendToken(newUser, 201, res);
@@ -66,7 +66,7 @@ exports.adminSignup = catchAsync(async (req, res, next) => {
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
     passwordChangedAt: req.body.passwordChangedAt,
-    role: 'admin',
+    // role: 'admin',
   });
 
   createSendToken(newUser, 201, res);
@@ -81,6 +81,12 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!email || !password) {
     return next(new AppError('Please provide email and password!', 400));
   }
+
+  const existingeEmail = await User.findOne({ email });
+  if (!existingeEmail) {
+    return next(new AppError('You are not a member.Register now', 401));
+  }
+
   // 2) Check if user exists && password is correct
   const user = await User.findOne({ email }).select('+password');
 

@@ -31,7 +31,7 @@ function Nav() {
             Orion
           </a>
         </div>
-        <UserMenu user={auth.user} className="mr-4" />
+        {auth && <UserMenu user={auth.user} className="mr-4" />}
       </div>
     </nav>
   );
