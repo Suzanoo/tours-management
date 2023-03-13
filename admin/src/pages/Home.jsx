@@ -36,7 +36,7 @@ function Home() {
   };
 
   return (
-    <>
+    <div className="container">
       <section>
         {/* Get all */}
         <h2>Tours List :</h2>
@@ -49,7 +49,7 @@ function Home() {
 
         <hr></hr>
         <br></br>
-        <TourTable data={tours.data.data} />
+        <TourTable data={tours.data.data} className="form-group" />
 
         {/* Create new */}
         <button className="btn">
@@ -58,7 +58,7 @@ function Home() {
           </Link>
         </button>
       </section>
-    </>
+    </div>
   );
 }
 

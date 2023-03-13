@@ -33,8 +33,7 @@ const TourTable = (props) => {
         tour.name.toLowerCase().includes(searchText) ||
         tour.price.toString().includes(searchText) ||
         tour.duration.toString().includes(searchText) ||
-        tour.difficulty.toLowerCase().includes(searchText) ||
-        tour.startLocation.description.toLowerCase().includes(searchText)
+        tour.startDates[0].includes(searchText)
     );
     setFilteredTours(filteredTours);
   };
@@ -47,15 +46,14 @@ const TourTable = (props) => {
   };
 
   return (
-    <>
-      <div className="filter-container">
-        <input
-          type="text"
-          placeholder="Filter by tour name, price, duration, difficulty, or start location"
-          onChange={handleFilter}
-        />
-      </div>
-      <table className="fixed_headers">
+    <div className="tour-table">
+      <input
+        type="text"
+        placeholder="Filter by tour name, price, duration, difficulty, or start location"
+        onChange={handleFilter}
+      />
+
+      <table className="rwd-table">
         <thead>
           <tr>
             <th onClick={() => handleSort('name')}>Name {sortIcon('name')}</th>
@@ -65,11 +63,8 @@ const TourTable = (props) => {
             <th onClick={() => handleSort('duration')}>
               Duration {sortIcon('duration')}
             </th>
-            <th onClick={() => handleSort('difficulty')}>
-              Difficulty {sortIcon('difficulty')}
-            </th>
-            <th onClick={() => handleSort('startLocation.description')}>
-              Start Location {sortIcon('startLocation.description')}
+            <th onClick={() => handleSort('startDates')}>
+              Date {sortIcon('startDates')}
             </th>
           </tr>
         </thead>
@@ -79,13 +74,12 @@ const TourTable = (props) => {
               <td>{tour.name}</td>
               <td>{`$${tour.price}`}</td>
               <td>{`${tour.duration} days`}</td>
-              <td>{tour.difficulty}</td>
-              <td>{tour.startLocation.description}</td>
+              <td>{tour.startDates[0].split('T')[0]}</td>
             </tr>
           ))}
         </tbody>
       </table>
-    </>
+    </div>
   );
 };
 
