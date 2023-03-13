@@ -36,7 +36,7 @@ const reviewSchema = new mongoose.Schema(
 );
 
 // create a compound index on tour, user, and uniqueNumber with unique constraint
-reviewSchema.index({ tour: 1, user: -1 }, { unique: true });
+reviewSchema.index({ tour: 1, user: -1 }, { unique: true }); // -1 mean search tour before user
 
 // Populate the review
 reviewSchema.pre(/^find/, function (next) {
@@ -79,7 +79,7 @@ reviewSchema.statics.calcAverageRatings = async function (tourId) {
   } else {
     await Tour.findByIdAndUpdate(tourId, {
       ratingsQuantity: 0,
-      ratingsAverage: 4.5,
+      ratingsAverage: 3.5, //default value
     });
   }
 };

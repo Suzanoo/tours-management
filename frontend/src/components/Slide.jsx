@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 
 import { FaMountain, FaWalking, FaSnowflake, FaTree } from 'react-icons/fa';
+import StarRating2 from './StarRating2';
 
 import '../public/css/slide.scss';
 
@@ -34,6 +35,7 @@ function Slide() {
           <div className="info">
             <div className="main">{tour.name}</div>
             <div className="sub">{tour.duration} Days Trip</div>
+            <StarRating2 rating={tour.ratingsAverage} />
           </div>
         </div>
       </div>
