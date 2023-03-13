@@ -1,9 +1,10 @@
 import { FaSignInAlt, FaSignOutAlt, FaUser } from 'react-icons/fa';
-import { GiGemini } from 'react-icons/gi';
 
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout, reset } from '../features/auth/authSlice';
+
+import logo from '../public/img/logo.png';
 
 // import BurgerMenu from './BurgerMenu';
 
@@ -22,29 +23,29 @@ function Header() {
     <header className="header">
       <div className="logo">
         <Link to="/">
-          <GiGemini />
+          <img src={logo} alt="" className="" />
         </Link>
       </div>
       <ul>
         {user ? (
           <>
             <li>
-              <button className="btn" onClick={onLogout}>
+              <Link className="" onClick={onLogout}>
                 <FaSignOutAlt /> Logout
-              </button>
+              </Link>
             </li>
           </>
         ) : (
           <>
             <ul>
               <li>
-                <Link to="/login" className="btn">
+                <Link to="/login" className="">
                   <FaSignInAlt />
                   Login
                 </Link>
               </li>
               <li>
-                <Link to="/register" className="btn">
+                <Link to="/register" className="">
                   <FaUser />
                   Register
                 </Link>

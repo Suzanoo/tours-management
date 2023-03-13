@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 
 import Dropdown from '../components/Dropdown';
+import TourTable from '../components/Table';
 
 import { getAllTours } from '../features/tour/tourSlice';
 
@@ -48,6 +49,7 @@ function Home() {
 
         <hr></hr>
         <br></br>
+        <TourTable data={tours.data.data} />
 
         {/* Create new */}
         <button className="btn">
