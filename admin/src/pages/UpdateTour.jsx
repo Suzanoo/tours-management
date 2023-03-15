@@ -1,30 +1,25 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-
-import { createNewTour, reset } from '../features/tour/tourSlice';
-
 import Spinner from '../components/Spinner';
 
-/*
-1).Define initial blank form
-2).Configure form fields and hooks required
-3).Access auth state in store and parse into variables
-4).Events handlers
-5).JSX Rendering
-*/
+import { getAllTours, updateTour, reset } from '../features/tour/tourSlice';
+
 const options = ['easy', 'medium', 'difficulty'];
-function CreateNewTour() {
-  // 1).Initial state
-  const initial = {
-    startLocation: {
-      address: '',
-    },
+
+function UpdateTour() {
+  // Initial configuration:
+  const { id } = useParams();
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { tours, isLoading, isSuccess, isError, message } = useSelector(
+    (state) => state.tours
+  );
+
+  const initialState = {
     name: '',
     duration: '',
     maxGroupSize: '',
@@ -33,13 +28,19 @@ function CreateNewTour() {
     summary: '',
     description: '',
     imageCover: '',
-    startDates: [null, null, null],
   };
 
-  // 2).Configure form fields
-  const [formData, setFormData] = useState(initial);
+  const [formData, setFormData] = useState(initialState);
+
+  // Fetch data depend on user click from table first:
+  useEffect(() => {
+    const tourData = tours.data.data.find((t) => t._id === id);
+    if (tourData) {
+      setFormData(tourData);
+    }
+  }, [tours, id]);
+
   const {
-    startLocation,
     name,
     duration,
     maxGroupSize,
@@ -48,18 +49,9 @@ function CreateNewTour() {
     summary,
     description,
     imageCover,
-    startDates,
   } = formData;
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  // 3).Access store
-  const { isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.tours
-  );
-
-  // 4).Events handlers
+  // Events handlers:
   useEffect(() => {
     if (isError) {
       toast.error(message);
@@ -67,31 +59,15 @@ function CreateNewTour() {
     }
 
     if (isSuccess) {
-      // navigate('/');
+      // dispatch(getAllTours()); // fetch updated tours list from server
+      // navigate('/'); // redirect to home page
     }
-  }, [isError, isSuccess, message, navigate, dispatch]);
+  }, [isSuccess, isError, message, dispatch, navigate]);
 
-  const handleChange = (event) => {
+  const handleChange = (el) => {
     setFormData((prevState) => ({
       ...prevState,
-      [event.target.name]: event.target.value,
-    }));
-  };
-
-  const handleStartDate = (date, index) => {
-    const newStartDates = [...formData.startDates];
-    newStartDates[index] = date;
-    setFormData({ ...formData, startDates: newStartDates });
-  };
-
-  const handleStartLocation = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      startLocation: {
-        ...prevState.startLocation,
-        [name]: value,
-      },
+      [el.target.name]: el.target.value,
     }));
   };
 
@@ -99,8 +75,6 @@ function CreateNewTour() {
     e.preventDefault();
 
     const tourData = {
-      startLocation,
-      name,
       duration: +duration, // convert to int
       maxGroupSize: +maxGroupSize, // convert to int
       difficulty,
@@ -108,41 +82,28 @@ function CreateNewTour() {
       summary,
       description,
       imageCover,
-      startDates,
     };
-    dispatch(createNewTour(tourData));
+    dispatch(updateTour({ id, tourData }));
   };
 
   if (isLoading) return <Spinner />;
 
-  //5).JSX Rendering
+  // Rendering
   return (
     <>
       <section className="heading">
-        <p>Create New Tour</p>
+        <p>Update Tour</p>
       </section>
       <section className="form">
         <form onSubmit={onSubmit}>
           <div className="form-group">
-            <label htmlFor="startLocation.address">
-              Start Location Address
-            </label>
+            <label htmlFor="duration">Name</label>
             <input
-              type="text"
-              name="address"
-              value={startLocation.address}
-              onChange={handleStartLocation}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="name">Tour Name</label>
-            <input
+              className="form-control"
               type="text"
               name="name"
               value={name}
               onChange={handleChange}
-              placeholder="Name range 5-50 characters"
-              required
             />
           </div>
           <div className="form-group">
@@ -153,7 +114,6 @@ function CreateNewTour() {
               name="duration"
               value={duration}
               onChange={handleChange}
-              required
             />
           </div>
           <div className="form-group">
@@ -163,7 +123,6 @@ function CreateNewTour() {
               name="maxGroupSize"
               value={maxGroupSize}
               onChange={handleChange}
-              required
             />
           </div>
           <div className="form-group">
@@ -181,6 +140,7 @@ function CreateNewTour() {
               ))}
             </select>
           </div>
+
           <div className="form-group">
             <label htmlFor="price">Price</label>
             <input
@@ -189,9 +149,9 @@ function CreateNewTour() {
               name="price"
               value={price}
               onChange={handleChange}
-              required
             />
           </div>
+
           <div className="form-group">
             <label htmlFor="summary">Tour Summary</label>
             <textarea
@@ -207,10 +167,10 @@ function CreateNewTour() {
               className="form-control"
               name="description"
               value={description}
-              required
               onChange={handleChange}
             ></textarea>
           </div>
+
           <div className="form-group">
             <label htmlFor="imageCover">Cover Image</label>
             <input
@@ -218,20 +178,7 @@ function CreateNewTour() {
               name="imageCover"
               value={imageCover}
               onChange={handleChange}
-              required
             />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="startDates">Start Dates</label>
-            {startDates.map((el, index) => (
-              <DatePicker
-                key={index}
-                selected={el}
-                onChange={(date) => handleStartDate(date, index)}
-                dateFormat="yyyy/MM/dd"
-              />
-            ))}
           </div>
 
           <div className="form-group">
@@ -245,4 +192,4 @@ function CreateNewTour() {
   );
 }
 
-export default CreateNewTour;
+export default UpdateTour;

@@ -10,6 +10,7 @@ import ForgotPwd from './pages/ForgotPwd';
 import ResetPwd from './pages/ResetPwd';
 
 import CreateNewTour from './pages/CreateNewTour';
+import UpdateTour from './pages/UpdateTour';
 
 // import Footer from './components/Footer';
 
@@ -28,6 +29,7 @@ function App() {
             {/* TODO : Solve to use  path="/reset-pwd:token" instead */}
 
             <Route path="/new-tour" element={<CreateNewTour />} />
+            <Route path="/update-tour/:id" element={<UpdateTour />} />
           </Routes>
           {/* <Footer /> */}
         </div>

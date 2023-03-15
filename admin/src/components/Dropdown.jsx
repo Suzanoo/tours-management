@@ -17,7 +17,7 @@ const Dropdown = (props) => {
         className="btn"
         onClick={() => console.log(`Selected Option: ${props.selectedOption}`)}
       >
-        Submit
+        Update
       </button>
     </div>
   );

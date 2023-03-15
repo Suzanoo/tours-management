@@ -18,7 +18,7 @@ $column_width: auto !important;
   padding: 10px;
   border: 1px solid #e6e6e6;
   border-radius: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   font-family: inherit;
 }
 
@@ -118,5 +118,15 @@ $column_width: auto !important;
   .rwd-table th,
   .rwd-table td {
     padding: 1em !important;
+  }
+
+  .updateBtn {
+    color: orange;
+    padding: 0.25em 0.5em 0.25em 0.5em;
+  }
+
+  .deleteBtn {
+    color: red;
+    padding: 0.25em 0.5em 0.25em 0.5em;
   }
 }

@@ -14,32 +14,42 @@ function Home() {
 
   // config
   const dispatch = useDispatch();
-  const { tours, isError, isSuccess, message } = useSelector(
-    (state) => state.tours
-  );
+  const { tours } = useSelector((state) => state.tours);
+
+  // First fetch
+  useEffect(() => {
+    dispatch(getAllTours());
+  }, [dispatch]);
 
   // dropdown option come from store object
   // TODO check if not Array
   const options = tours.data.data.map((el) => el.name);
 
-  // event handlers
-  useEffect(() => {
-    if (isError) {
-      toast.error(message);
-    }
-
-    dispatch(getAllTours());
-  }, [tours, isError, isSuccess, message, dispatch]);
-
+  // Event handlers
   const handleDropdown = (value) => {
     setSelectedOption(value);
+  };
+
+  const updateTable = () => {
+    dispatch(getAllTours());
   };
 
   return (
     <div className="container">
       <section>
         {/* Get all */}
-        <h2>Tours List :</h2>
+        <div className="text-1">Tours Table :</div>
+
+        {tours && <TourTable data={tours.data.data} />}
+        <div className="form-group">
+          <button type="submit" className="btn btn-block" onClick={updateTable}>
+            Update Table
+          </button>
+        </div>
+
+        {/* Update One */}
+        <div className="text-1">Update A Tour :</div>
+
         <Dropdown
           options={options}
           onSelect={handleDropdown}
@@ -47,16 +57,13 @@ function Home() {
           className="form-group"
         />
 
-        <hr></hr>
-        <br></br>
-        <TourTable data={tours.data.data} className="form-group" />
-
-        {/* Create new */}
-        <button className="btn">
-          <Link to="/new-tour" className="btn btn-primary">
+        {/* Create New One*/}
+        <div className="text-1">
+          Create New Tour :{' '}
+          <Link to="/new-tour" style={{ color: 'orange' }}>
             Create New Tour
-          </Link>
-        </button>
+          </Link>{' '}
+        </div>
       </section>
     </div>
   );
