@@ -1,23 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { toast } from 'react-toastify';
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-import { createNewTour, reset } from '../features/tour/tourSlice';
+import { createNewTour, getAllTours, reset } from '../features/tour/tourSlice';
 
-import Spinner from '../components/Spinner';
-
-/*
-1).Define initial blank form
-2).Configure form fields and hooks required
-3).Access auth state in store and parse into variables
-4).Events handlers
-5).JSX Rendering
-*/
 const options = ['easy', 'medium', 'difficulty'];
 function CreateNewTour() {
   // 1).Initial state
@@ -95,7 +85,7 @@ function CreateNewTour() {
     }));
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     const tourData = {
@@ -110,10 +100,12 @@ function CreateNewTour() {
       imageCover,
       startDates,
     };
-    dispatch(createNewTour(tourData));
+    await dispatch(createNewTour(tourData));
+    navigate('/home');
+    dispatch(getAllTours('http://localhost:3000/api/v1/tours'));
   };
 
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <div class="spinner"></div>;
 
   //5).JSX Rendering
   return (

@@ -2,7 +2,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import Spinner from '../components/Spinner';
 
 import { updateTour, reset, getAllTours } from '../features/tour/tourSlice';
 
@@ -92,7 +91,7 @@ function UpdateTour() {
     }
   };
 
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <div class="spinner"></div>;
 
   return (
     <>

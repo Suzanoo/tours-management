@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { register, reset } from '../features/auth/authSlice';
-import Spinner from '../components/Spinner';
 
 /*
 1).Define initial blank form
@@ -73,7 +72,7 @@ function Register() {
     }
   };
 
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <div class="spinner"></div>;
 
   //5).JSX Rendering
   return (

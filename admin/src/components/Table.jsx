@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { FaSort, FaSortUp, FaSortDown } from 'react-icons/fa';
 
@@ -51,6 +51,10 @@ const TourTable = () => {
     return <FaSort />;
   };
 
+  const handleDetail = (id) => {
+    navigate(`/tour/${id}`);
+  };
+
   const handleUpdate = (id) => {
     navigate(`/update-tour/${id}`);
   };
@@ -96,6 +100,7 @@ const TourTable = () => {
             <th onClick={() => handleSort('startDates')}>
               Date {sortIcon('startDates')}
             </th>
+            <th>Detail</th>
             <th>Update</th>
             <th>Delete</th>
           </tr>
@@ -107,6 +112,14 @@ const TourTable = () => {
               <td>{`$${tour.price}`}</td>
               <td>{`${tour.duration} days`}</td>
               <td>{tour.startDates[0].split('T')[0]}</td>
+              <td>
+                <button
+                  className="detailBtn"
+                  onClick={() => handleDetail(tour._id)}
+                >
+                  Detail
+                </button>
+              </td>
               <td>
                 <button
                   className="updateBtn"

@@ -29,6 +29,7 @@ function App() {
             {/* TODO : Solve to use  path="/reset-pwd:token" instead */}
 
             <Route path="/new-tour" element={<CreateNewTour />} />
+            <Route path="/tour/:id" />
             <Route path="/update-tour/:id" element={<UpdateTour />} />
           </Routes>
           {/* <Footer /> */}

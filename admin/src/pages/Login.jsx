@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { login, reset } from '../features/auth/authSlice';
-import Spinner from '../components/Spinner';
 import { getAllTours } from '../features/tour/tourSlice';
 
 /*
@@ -64,7 +63,7 @@ function Login() {
     dispatch(login(userData));
   };
 
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <div class="spinner"></div>;
 
   // 5).
   return (
