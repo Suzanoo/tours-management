@@ -21,7 +21,7 @@ function Header() {
   return (
     <header className="header">
       <div className="logo">
-        <Link to="/">
+        <Link to="/home">
           <img src={logo} alt="" className="" />
         </Link>
       </div>
@@ -38,7 +38,7 @@ function Header() {
           <>
             <ul>
               <li>
-                <Link to="/login" className="">
+                <Link to="/" className="">
                   <FaSignInAlt />
                   Login
                 </Link>

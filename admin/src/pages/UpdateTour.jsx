@@ -4,14 +4,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Spinner from '../components/Spinner';
 
-import { getAllTours, updateTour, reset } from '../features/tour/tourSlice';
+import { updateTour, reset, getAllTours } from '../features/tour/tourSlice';
 
 const options = ['easy', 'medium', 'difficulty'];
 
 function UpdateTour() {
-  // Initial configuration:
+  // Configuration:
   const { id } = useParams();
-
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -40,6 +39,7 @@ function UpdateTour() {
     }
   }, [tours, id]);
 
+  // Assign form fields
   const {
     name,
     duration,
@@ -59,8 +59,6 @@ function UpdateTour() {
     }
 
     if (isSuccess) {
-      // dispatch(getAllTours()); // fetch updated tours list from server
-      // navigate('/'); // redirect to home page
     }
   }, [isSuccess, isError, message, dispatch, navigate]);
 
@@ -71,9 +69,10 @@ function UpdateTour() {
     }));
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
+    // Fetch values from form
     const tourData = {
       duration: +duration, // convert to int
       maxGroupSize: +maxGroupSize, // convert to int
@@ -83,12 +82,18 @@ function UpdateTour() {
       description,
       imageCover,
     };
-    dispatch(updateTour({ id, tourData }));
+
+    try {
+      await dispatch(updateTour({ id, tourData }));
+      navigate('/home');
+      dispatch(getAllTours('http://localhost:3000/api/v1/tours'));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   if (isLoading) return <Spinner />;
 
-  // Rendering
   return (
     <>
       <section className="heading">

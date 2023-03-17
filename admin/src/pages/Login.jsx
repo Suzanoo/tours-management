@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { login, reset } from '../features/auth/authSlice';
 import Spinner from '../components/Spinner';
+import { getAllTours } from '../features/tour/tourSlice';
 
 /*
 1).Define initial blank form
@@ -28,7 +29,7 @@ function Login() {
   const dispatch = useDispatch();
 
   // 3).
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
+  const { isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.auth
   );
 
@@ -39,11 +40,12 @@ function Login() {
     }
 
     if (isSuccess) {
-      navigate('/'); // Redirect to Home page
+      dispatch(getAllTours());
+      navigate('/home');
     }
 
     dispatch(reset());
-  }, [user, isError, isSuccess, message, navigate, dispatch]);
+  }, [isError, isSuccess, message, navigate, dispatch]);
 
   const onChange = (el) => {
     setFormData((prevState) => ({
@@ -59,8 +61,7 @@ function Login() {
       email,
       password,
     };
-
-    dispatch(login(userData)); // update state
+    dispatch(login(userData));
   };
 
   if (isLoading) return <Spinner />;

@@ -3,7 +3,9 @@ import axios from 'axios';
 const API_URL = 'api/v1/tours';
 
 // Get All
-const getAllTours = async (url = API_URL + '/') => {
+const getAllTours = async (url) => {
+  if (!url) url = `${API_URL}/`;
+
   try {
     const response = await axios.get(url);
     if (response.data) {
@@ -29,7 +31,6 @@ const createNewTour = async (tourData) => {
 
 // Update tour
 const updateTour = async (id, tourData) => {
-  console.log(tourData);
   try {
     const response = await axios.patch(
       // use absolute path instead of relative path

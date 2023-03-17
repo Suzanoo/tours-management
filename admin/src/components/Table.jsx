@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { FaSort, FaSortUp, FaSortDown } from 'react-icons/fa';
 
@@ -7,13 +7,14 @@ import { deleteTour } from '../features/tour/tourSlice';
 
 import '../public/css/table.scss';
 
-const TourTable = (props) => {
+const TourTable = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [tours, setTours] = useState(JSON.parse(localStorage.getItem('tours')));
   const [sortType, setSortType] = useState('asc');
   const [sortedBy, setSortedBy] = useState('name');
-  const [filteredTours, setFilteredTours] = useState(props.data);
+  const [filteredTours, setFilteredTours] = useState(tours.data.data);
 
   const handleSort = (field) => {
     const isAsc = sortType === 'asc';
@@ -33,7 +34,7 @@ const TourTable = (props) => {
 
   const handleFilter = (e) => {
     const searchText = e.target.value.toLowerCase();
-    const filteredTours = props.data.filter(
+    const filteredTours = tours.data.data.filter(
       (tour) =>
         tour.name.toLowerCase().includes(searchText) ||
         tour.price.toString().includes(searchText) ||
@@ -59,15 +60,30 @@ const TourTable = (props) => {
       'Are you sure you want to delete this tour?'
     );
     if (confirmDelete) {
-      dispatch(deleteTour(id));
+      await dispatch(deleteTour(id));
     }
+  };
+
+  const handleUpdateTable = () => {
+    setTours(JSON.parse(localStorage.getItem('tours')));
+    const searchText = document
+      .querySelector('.tour-table input')
+      .value.toLowerCase();
+    const filteredTours = tours.data.data.filter(
+      (tour) =>
+        tour.name.toLowerCase().includes(searchText) ||
+        tour.price.toString().includes(searchText) ||
+        tour.duration.toString().includes(searchText) ||
+        tour.startDates[0].includes(searchText)
+    );
+    setFilteredTours(filteredTours);
   };
 
   return (
     <div className="tour-table">
       <input type="text" placeholder="Filter..." onChange={handleFilter} />
 
-      <table className="rwd-table">
+      <table className="rwd-table" key={JSON.stringify(tours)}>
         <thead>
           <tr>
             <th onClick={() => handleSort('name')}>Name {sortIcon('name')}</th>
@@ -110,6 +126,9 @@ const TourTable = (props) => {
             </tr>
           ))}
         </tbody>
+        <button className="refreshBtn" onClick={handleUpdateTable}>
+          Refresh Table
+        </button>
       </table>
     </div>
   );
