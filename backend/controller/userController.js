@@ -19,7 +19,7 @@ const filterObj = (obj, ...allowedFields) => {
 // -----------------------------------
 // ##
 // -----------------------------------
-exports.uploadProfilePicture = upload.single('photo');
+exports.uploadProfilePicture = upload.single('photo'); // same name of user schema and input in ProfilePicture.jsx
 exports.resizeProfilePicture = resizeImg.resizeProfilePicture;
 
 exports.getMe = (req, res, next) => {
@@ -64,7 +64,8 @@ exports.updateUserData = catchAsync(async (req, res, next) => {
 
   // 2) Filtered out unwanted fields names that are not allowed to be updated
   const filteredBody = filterObj(req.body, 'name', 'email'); // now only allow name and email
-  if (req.file) filteredBody.photo = req.file.filename; // allow profile picture
+  if (req.body.photo) filteredBody.photo = req.body.photo; // allow profile picture from POSTMAN (test dev)
+  if (req.file) filteredBody.photo = req.file.filename; // allow profile picture from file upload
 
   // 3) Update user document
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {

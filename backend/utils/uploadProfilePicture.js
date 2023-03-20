@@ -15,7 +15,7 @@ Note: response from multer
 }
  */
 
-// store in local
+// store local
 // const multerStorage = multer.diskStorage({
 //   destination: (req, file, cb) => {
 //     cb(null, 'backend/public/img/users'); // TODO why use this path
@@ -26,7 +26,7 @@ Note: response from multer
 //   },
 // });
 
-// store in buffer then sharp read buffer too resize later
+// store in buffer then use sharp read buffer too resize later
 const multerStorage = multer.memoryStorage();
 
 // filter image upload type

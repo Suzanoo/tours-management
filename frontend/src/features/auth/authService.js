@@ -18,6 +18,14 @@ const login = async (userData) => {
   return response.data;
 };
 
+// Get User Data
+const getUser = async (id) => {
+  const response = await axios.get(`http://localhost:3000/api/v1/users/${id}`);
+  if (response.data)
+    localStorage.setItem('user', JSON.stringify(response.data));
+  return response.data;
+};
+
 // Logout
 const logout = async () => {
   await axios.get(API_URL + '/logout');
@@ -42,9 +50,17 @@ const resetPwd = async (data) => {
 
 // Update Profile Picture
 const updateProfilePicture = async (formData) => {
-  const response = await axios.patch(API_URL + '/updateUserData', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  });
+  const response = await axios
+    .patch(API_URL + '/updateUserData', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+    .then((response) => {
+      // console.log(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
   if (response.data)
     localStorage.setItem('user', JSON.stringify(response.data));
   return response.data;
@@ -54,6 +70,7 @@ const updateProfilePicture = async (formData) => {
 const authService = {
   register,
   login,
+  getUser,
   logout,
   forgotPwd,
   resetPwd,

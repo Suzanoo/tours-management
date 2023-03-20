@@ -10,7 +10,7 @@ import '../public/css/slide.scss';
 
 function Slide() {
   const [activeOption, setActiveOption] = useState(1);
-  const tours = JSON.parse(localStorage.getItem('tours'));
+  const tours = JSON.parse(localStorage.getItem('tours')) || [];
 
   let slideOptions = [];
 

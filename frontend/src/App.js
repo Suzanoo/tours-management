@@ -18,10 +18,9 @@ function App() {
     <>
       <Router>
         <div className="container">
-          <Nav />
-          {/* <Header /> */}
+          {<Nav />}
           <Routes>
-            <Route path="/" element={<Landing />} />
+            <Route path="/home" element={<Landing />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-pwd" element={<ForgotPwd />} />

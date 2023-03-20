@@ -61,6 +61,26 @@ export const login = createAsyncThunk(
   }
 );
 
+// Create async action-reducer: login
+export const getUser = createAsyncThunk(
+  // async action type
+  'auth/getUser',
+  // function return payload
+  async (id, thunkAPI) => {
+    try {
+      return await authService.getUser(id);
+    } catch (err) {
+      const message =
+        err.message ||
+        (err.response && err.response.data && err.response.data.message) ||
+        err.toString();
+      // console.log(err.response.data);
+      // alert(err.response.data.message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 // Create async action-reducer: logout
 export const logout = createAsyncThunk(
   // async action type
@@ -113,9 +133,7 @@ export const resetPwd = createAsyncThunk(
 
 //
 export const updateProfilePicture = createAsyncThunk(
-  // async action type
   'auth/updateProfilePicture',
-  // function return payload
   async (formData, thunkAPI) => {
     try {
       return await authService.updateProfilePicture(formData);
@@ -169,6 +187,20 @@ export const authSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(login.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload;
+        state.user = null;
+      })
+      .addCase(getUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
+      })
+      .addCase(getUser.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload;

@@ -1,11 +1,17 @@
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { FiUser, FiSettings, FiLogOut } from 'react-icons/fi';
 
 import { logout } from '../features/auth/authSlice';
 import UserProfilePicture from './ProfilePicture';
 
-function UserMenu(props) {
+import '../public/css/profile_picture.css';
+
+function UserMenu() {
+  const auth = useSelector((state) => state.auth);
+  const user = auth.user != null ? auth.user.data.user : null;
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -41,73 +47,79 @@ function UserMenu(props) {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate('/');
+    navigate('/home');
   };
 
   return (
     <div className="flex justify-between items-center ">
-      {props.user ? (
+      {user != null ? (
         <>
           <div className="relative">
             <div
-              id="user-menu"
-              className="cursor-pointer"
+              id="user-img"
+              className="cursor-pointer profile-picture"
               onMouseEnter={handleMenuHover}
             >
               <img
-                src={`${require(`../public/img/menu-img/profile.png`)}`}
+                src={`${require(`../public/img/users-profile/${user.photo}`)}`}
                 alt=""
-                className=""
               />
             </div>
             {showMenu && (
               <div
+                id="user-menu"
                 ref={menuRef}
-                className="absolute z-40 right-0 top-full bg-white border 
-                rounded-lg shadow-lg"
+                className="flex flex-col items-center absolute z-40 right-0 top-full bg-white border 
+                rounded-lg shadow-lg "
               >
                 <div className="justify-center mx-8">
-                  <UserProfilePicture user={props.user} />
-                  <p className="ml-2 text-orange-500 font-bold">Sparrow</p>
-                  <span></span>
-                  <ul>
+                  <ul className="flex flex-col items-center">
+                    {/* Profile picture */}
+                    <li className="px-4 py-2">
+                      <div style={{ position: 'relative' }}>
+                        <UserProfilePicture user={user} />
+                      </div>
+                    </li>
+                    {/* Name */}
+                    <li>
+                      <span className=" text-orange-500 font-bold">
+                        {user.name}
+                      </span>
+                    </li>
+                    {/* Personal Data */}
                     <li>
                       <div
-                        className="block px-4 py-2 hover:text-darkGrayishBlue"
+                        className="flex cursor-pointer items-center px-4 py-2 hover:text-darkGrayishBlue"
                         onClick={() => handleMenuClick('personal')}
                       >
-                        <img
-                          src={`${require('../public/img/menu-img/profile.png')}`}
-                          alt=""
-                          className="mt-0"
-                        />
-                        Personal
+                        <FiUser className="inline-block mr-2 text-orange-500" />
+                        <span className="inline-block align-middle">
+                          Personal
+                        </span>
                       </div>
                     </li>
+                    {/* Setting */}
                     <li>
                       <div
-                        className="block px-4 py-2 hover:text-darkGrayishBlue"
+                        className="flex cursor-pointer items-center px-4 py-2 hover:text-darkGrayishBlue"
                         onClick={() => handleMenuClick('setting')}
                       >
-                        <img
-                          src={`${require('../public/img/menu-img/setting.png')}`}
-                          alt=""
-                          className="mt-0"
-                        />
-                        Settings
+                        <FiSettings className="inline-block mr-2 text-orange-500" />
+                        <span className="inline-block align-middle">
+                          Settings
+                        </span>
                       </div>
                     </li>
+                    {/* Logout */}
                     <li>
                       <div
-                        className="block px-4 py-2 hover:text-darkGrayishBlue"
+                        className="flex cursor-pointer items-center px-4 py-2 hover:text-darkGrayishBlue"
                         onClick={() => handleMenuClick('logout')}
                       >
-                        <img
-                          src={`${require('../public/img/menu-img/logout.png')}`}
-                          alt=""
-                          className="mt-0"
-                        />
-                        Logout
+                        <FiLogOut className="inline-block mr-2 text-orange-500" />
+                        <span className="inline-block align-middle">
+                          Logout
+                        </span>
                       </div>
                     </li>
                   </ul>

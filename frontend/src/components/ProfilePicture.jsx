@@ -1,31 +1,52 @@
 // import { useState } from 'react';
-// import { updateProfilePicture} from '../features/auth/authSlice';
+
+import { FiCamera } from 'react-icons/fi';
+import { useDispatch } from 'react-redux';
+import { updateProfilePicture, getUser } from '../features/auth/authSlice';
+import '../public/css/profile_picture.css';
 
 const ProfilePicture = (props) => {
-  // const [picture, setPicture] = useState(null);
+  const dispatch = useDispatch();
+
+  const handleProfilePicUpload = async (event) => {
+    const file = event.target.files[0];
+
+    // assign name to file upload, Multer will catch this name
+    // name must be match user schema
+    const formData = new FormData();
+    formData.append('photo', file);
+
+    await dispatch(updateProfilePicture(formData));
+
+    // update user data in store
+    await dispatch(getUser(props.user._id));
+  };
 
   return (
-    <div className="mt-2">
-      <img
-        src={`${require(`../public/img/users-profile/${props.user.data.user.photo}`)}`}
-        alt=""
-        className="mt-0"
-      />
-      {/* 
-      Feature to upload image :
-      TODO learn store image in cloud storage
-
-      <label htmlFor="picture-input">
-        <i className="fas fa-camera"></i>
-      </label>
-      <input
-        id="picture-input"
-        type="file"
-        accept="image/*"
-        onChange={handlePictureChange}
-      />
-      <button onClick={handlePictureSubmit}>Upload</button> */}
-    </div>
+    <>
+      <div className="user-profile">
+        <div className="profile-picture">
+          <img
+            src={`${require(`../public/img/users-profile/${props.user.photo}`)}`}
+            alt=""
+          />
+        </div>
+        <label
+          htmlFor="profile-pic-upload"
+          className="absolute bottom-0 right-0 bg-white rounded-full 
+           h-8 w-8 flex justify-center items-center cursor-pointer hover:bg-gray-200"
+        >
+          <FiCamera className="text-gray-500" />
+        </label>
+        <input
+          type="file"
+          id="profile-pic-upload"
+          name="photo" //set this name for Multer use
+          className="hidden"
+          onChange={handleProfilePicUpload}
+        />
+      </div>
+    </>
   );
 };
 
