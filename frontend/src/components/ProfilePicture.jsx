@@ -11,10 +11,9 @@ const ProfilePicture = (props) => {
   const handleProfilePicUpload = async (event) => {
     const file = event.target.files[0];
 
-    // assign name to file upload, Multer will catch this name
-    // name must be match user schema
+    // assign name to file upload,
     const formData = new FormData();
-    formData.append('photo', file);
+    formData.append('photo', file); // same name in schema, multer will catch this name
 
     await dispatch(updateProfilePicture(formData));
 
@@ -41,7 +40,7 @@ const ProfilePicture = (props) => {
         <input
           type="file"
           id="profile-pic-upload"
-          name="photo" //set this name for Multer use
+          name="photo" //set this name for Multer used
           className="hidden"
           onChange={handleProfilePicUpload}
         />

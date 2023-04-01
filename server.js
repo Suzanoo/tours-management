@@ -2,8 +2,8 @@ require('dotenv').config();
 
 // Connect to Database
 const connectDB = require('./backend/config/db');
-const HOST = process.env.DATABASE_LOCAL;
-connectDB(HOST);
+
+connectDB();
 
 // Handle uncaught exceptions
 process.on('uncaughtException', (err) => {

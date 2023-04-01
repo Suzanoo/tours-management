@@ -4,7 +4,7 @@ const AppError = require('../utils/appError');
 const CRUD = require('./factoryFunction');
 
 const resizeImg = require('../utils/resizeImg');
-const upload = require('../utils/uploadProfilePicture');
+const upload = require('../utils/multerUpload');
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
@@ -19,7 +19,7 @@ const filterObj = (obj, ...allowedFields) => {
 // -----------------------------------
 // ##
 // -----------------------------------
-exports.uploadProfilePicture = upload.single('photo'); // same name of user schema and input in ProfilePicture.jsx
+exports.uploadProfilePicture = upload.single('photo'); // same name in schema and input from ProfilePicture.jsx
 exports.resizeProfilePicture = resizeImg.resizeProfilePicture;
 
 exports.getMe = (req, res, next) => {
@@ -64,6 +64,8 @@ exports.updateUserData = catchAsync(async (req, res, next) => {
 
   // 2) Filtered out unwanted fields names that are not allowed to be updated
   const filteredBody = filterObj(req.body, 'name', 'email'); // now only allow name and email
+
+  // if update user profile picture
   if (req.body.photo) filteredBody.photo = req.body.photo; // allow profile picture from POSTMAN (test dev)
   if (req.file) filteredBody.photo = req.file.filename; // allow profile picture from file upload
 

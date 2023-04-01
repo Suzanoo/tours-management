@@ -1,18 +1,20 @@
 const mongoose = require('mongoose');
 
-const connectDB = async (HOST) => {
+const connectDB = async () => {
   try {
-    // const DB = process.env.DATABASE_LOCAL;
+    const HOST = process.env.DATABASE_LOCAL;
     const DB = HOST.replace('<PASSWORD>', process.env.DATABASE_PASSWORD);
 
     mongoose.set('strictQuery', false);
 
     await mongoose.connect(DB, {
       useNewUrlParser: true,
+      // useCreateIndex: true, // not support ???
+      // useFindAndModify: false, // not support ???
+      useUnifiedTopology: true,
     });
     //   .then((conn) => {
     //     console.log(conn.connection);
-    //     console.log('[INFO] Connection established!');
     //   });
 
     console.log(`[INFO] Conneced to MongoDB in ${process.env.NODE_ENV} mode.`);

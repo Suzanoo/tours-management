@@ -1,7 +1,7 @@
 {
-  "name": "natours",
+  "name": "backkend",
   "version": "1.0.0",
-  "description": "\"Sales System\"",
+  "description": "\"Tours Management System\"",
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
