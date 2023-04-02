@@ -52,7 +52,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
     passwordChangedAt: req.body.passwordChangedAt,
-    role: req.body.role,
+    // role: req.body.role, --> please define in update process
   });
 
   createSendToken(newUser, 201, res);
@@ -113,7 +113,7 @@ exports.adminLogin = catchAsync(async (req, res, next) => {
     return next(new AppError('Incorrect email or password', 401));
   }
 
-  if (user.role != 'admin') {
+  if (user.role !== 'admin') {
     return next(
       new AppError('You are not admin. Not allowed to enter admin page', 403)
     );
@@ -157,10 +157,9 @@ exports.protect = catchAsync(async (req, res, next) => {
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
-  }
-
-  // Or get from AXIOS headers
-  else if (req.headers.cookie.split('; ')[1].split('=')[1]) {
+  } else if (req.headers.cookie.startsWith('jwt')) {
+    token = req.headers.cookie.split('=')[1];
+  } else if (req.headers.cookie.split('; ')[1].split('=')[1]) {
     token = req.headers.cookie.split('; ')[1].split('=')[1];
   }
 
@@ -234,7 +233,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   //   'host'
   // )}/reset-pwd/${resetToken}`;
 
-  const message = `Forgot your password? Click link to create new. : ${URL}`;
+  // const message = `Forgot your password? Click link to create new. : ${URL}`;
 
   try {
     await handleEmail({

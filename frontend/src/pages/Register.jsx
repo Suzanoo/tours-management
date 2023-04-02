@@ -40,7 +40,7 @@ function Register() {
     }
 
     if (isSuccess) {
-      navigate('/'); // Redirect to Home page
+      navigate('/home'); // Redirect to Home page
     }
 
     dispatch(reset());
@@ -63,7 +63,7 @@ function Register() {
         name,
         email,
         password,
-        // passwordConfirm,
+        passwordConfirm,
       };
       // update state
       dispatch(register(userData));

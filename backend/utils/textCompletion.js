@@ -1,7 +1,3 @@
-const geocoder = require('./geocode');
-const AppError = require('./appError');
-const extractStr = require('./extractStr');
-
 // CONFIGURATION
 // https://github.com/openai/openai-node
 const { Configuration, OpenAIApi } = require('openai');
@@ -10,6 +6,10 @@ const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
+
+const geocoder = require('./geocode');
+const AppError = require('./appError');
+const extractStr = require('./extractStr');
 
 // GENERATE TOUR GUIDES
 // https://platform.openai.com/docs/api-reference/completions/create

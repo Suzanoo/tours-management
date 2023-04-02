@@ -12,7 +12,7 @@ import ResetPwd from './pages/ResetPwd';
 import CreateNewTour from './pages/CreateNewTour';
 import UpdateTour from './pages/UpdateTour';
 
-// import Footer from './components/Footer';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -32,7 +32,7 @@ function App() {
             <Route path="/tour/:id" />
             <Route path="/update-tour/:id" element={<UpdateTour />} />
           </Routes>
-          {/* <Footer /> */}
+          <Footer />
         </div>
       </Router>
       <ToastContainer />

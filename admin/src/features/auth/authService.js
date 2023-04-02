@@ -31,7 +31,6 @@ const forgotPwd = async (userData) => {
 };
 
 // Reset password
-
 const resetPwd = async (data) => {
   const response = await axios.patch(
     API_URL + `/reset-pwd/${data.token}`,

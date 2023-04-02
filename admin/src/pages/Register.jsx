@@ -65,7 +65,7 @@ function Register() {
         name,
         email,
         password,
-        // passwordConfirm,
+        passwordConfirm,
       };
       // update state
       dispatch(register(userData));

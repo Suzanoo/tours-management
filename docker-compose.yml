@@ -9,7 +9,7 @@ services:
     ports:
       - '27017:27017'
     networks:
-      - my-mern-app-network
+      - gemini-network
 
   backend:
     build:
@@ -21,23 +21,35 @@ services:
     depends_on:
       - mongodb
     networks:
-      - my-mern-app-network
+      - gemini-network
 
   frontend:
     build:
       context: ./frontend
+      dockerfile: Dockerfile.frontend
     container_name: frontend
     ports:
       - '3000:3000'
     depends_on:
-      - mongodb
       - backend
     networks:
-      - my-mern-app-network
+      - gemini-network
+
+  admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile.admin
+    container_name: admin
+    ports:
+      - '3001:3001'
+    depends_on:
+      - backend
+    networks:
+      - gemini-network
 
 volumes:
   mongodb-data:
 
 networks:
-  my-mern-app-network:
+  gemini-network:
     driver: bridge

@@ -36,7 +36,7 @@ export const createNewTour = createAsyncThunk(
   'tours/create-new-tour',
   // Payload:
   async (tourData, thunkAPI) => {
-    console.log(tourData);
+    // console.log(tourData);
     try {
       return await tourService.createNewTour(tourData);
     } catch (err) {

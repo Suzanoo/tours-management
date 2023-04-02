@@ -4,8 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout, reset } from '../features/auth/authSlice';
 
-import logo from '../public/img/logo.png';
-
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -21,7 +19,11 @@ function Header() {
     <header className="header">
       <div className="logo">
         <Link to="/home">
-          <img src={logo} alt="" className="" />
+          <img
+            src={`${require('../public/img/logo.png')}`}
+            alt=""
+            className=""
+          />
         </Link>
       </div>
       <ul>
@@ -42,12 +44,13 @@ function Header() {
                   Login
                 </Link>
               </li>
-              <li>
+              {/* Not allow register: New admin must be created by existing admin*/}
+              {/* <li>
                 <Link to="/register" className="">
                   <FaUser />
                   Register
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </>
         )}

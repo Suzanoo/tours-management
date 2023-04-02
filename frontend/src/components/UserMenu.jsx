@@ -36,9 +36,9 @@ function UserMenu() {
 
   const handleMenuClick = (menuOption) => {
     if (menuOption === 'personal') {
-      navigate('/');
+      navigate('/home');
     } else if (menuOption === 'setting') {
-      navigate('/');
+      navigate('/home');
     } else if (menuOption === 'logout') {
       handleLogout();
     }

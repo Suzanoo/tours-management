@@ -23,7 +23,7 @@ const createNewTour = async (tourData) => {
     const response = await axios.post(API_URL + '/', tourData, {
       withCredentials: true, // To include cookies in Axios requests
     });
-    if (response.data) console.log(response.data);
+    if (response.data);
   } catch (error) {
     console.error(error);
   }
@@ -34,7 +34,7 @@ const updateTour = async (id, tourData) => {
   try {
     const response = await axios.patch(
       // use absolute path instead of relative path
-      `http://localhost:3000/api/v1/tours/${id}`,
+      `http://localhost:3001/api/v1/tours/${id}`,
       tourData,
       {
         withCredentials: true, // To include cookies in Axios requests to get auth token
@@ -51,7 +51,7 @@ const deleteTour = async (id) => {
   try {
     await axios.delete(
       // use absolute path instead of relative path
-      `http://localhost:3000/api/v1/tours/${id}`,
+      `http://localhost:3001/api/v1/tours/${id}`,
       {
         withCredentials: true, // To include cookies in Axios requests to get auth token
       }
