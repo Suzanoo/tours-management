@@ -8,8 +8,8 @@ const geocoder = require('../utils/geocode');
 // get location geodata from mapquest API
 const geoLocation = async (address) => {
   try {
-    const mapquest_response = await geocoder.geocode(address);
-    return mapquest_response;
+    const mapquestResponse = await geocoder.geocode(address);
+    return mapquestResponse;
   } catch (error) {
     return new AppError('Server error', 500);
   }

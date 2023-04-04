@@ -137,28 +137,22 @@ exports.logout = (req, res) => {
 // ----------------------
 // PROTECT ROUTE
 exports.protect = catchAsync(async (req, res, next) => {
-  // See Axios request headers.cookie
-  // console.log(req.headers.cookie);
-  // console.log(req.headers.cookie.includes('jwt'));
-
-  if (!req.headers.cookie.includes('jwt')) {
-    return next(
-      new AppError('You are not logged in! Please log in to get access.', 401)
-    );
-  }
-  // console.log('Protect route', req.headers.cookie);
+  // console.log(req.headers);
 
   // 1) Getting token and check of it's there
   let token;
 
   // Get from headers
   if (
+    // If use Postman
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
+    // Read from Axios header
   } else if (req.headers.cookie.startsWith('jwt')) {
     token = req.headers.cookie.split('=')[1];
+    // Cookie come with cfrs token and jwt token
   } else if (req.headers.cookie.split('; ')[1].split('=')[1]) {
     token = req.headers.cookie.split('; ')[1].split('=')[1];
   }
@@ -227,13 +221,11 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   const resetToken = user.generateTokenForPasswordReset();
   await user.save({ validateBeforeSave: false });
 
-  // 3) Send it to user's email
+  // 3) Send token to user's email
   const URL = `http://localhost:3000/${resetToken}`;
   // const resetURL = `${req.protocol}://${req.get(
   //   'host'
   // )}/reset-pwd/${resetToken}`;
-
-  // const message = `Forgot your password? Click link to create new. : ${URL}`;
 
   try {
     await handleEmail({

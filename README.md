@@ -31,7 +31,7 @@
 - Get Mapqueest API key from [developer.mapquest.com](https://developer.mapquest.com/user/login).
 - Get Mapbox API key from [mapbox](https://www.mapbox.com/) then go to 'frontend/src/components/Map.jsx' find variable mapboxgl.accessToken = '' and assign value.
 
-## Run services
+## Build and Run services
 
 ### `docker-compose up -d --build`
 
